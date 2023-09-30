@@ -4,8 +4,10 @@
 </p>
 
 <em>Previous Searches:</em>
-<div *ngFor="let savedSearch of savedSearches">
- <a href="#" (click)="loadSavedSearch(savedSearch)">Use</a> &nbsp;<strong>Region:</strong> {{ savedSearch.region }} | <strong>Year:</strong> {{ savedSearch.year }} | <strong>Sector</strong> {{ savedSearch.sector }} | <strong>Category</strong> {{ savedSearch.category }}
+<div *ngFor="let savedSearch of savedSearches" class="saved-search">
+ <button (click)="loadSavedSearch(savedSearch)" class="btn btn-primary">Use</button> &nbsp;
+ <button (click)="deleteSavedSearch(savedSearch)" class="btn btn-danger">Delete</button> &nbsp;
+ <strong>Region:</strong> {{ savedSearch.region }} | <strong>Year:</strong> {{ savedSearch.year }} | <strong>Sector</strong> {{ savedSearch.sector }} | <strong>Category</strong> {{ savedSearch.category }}
 </div>
 
 

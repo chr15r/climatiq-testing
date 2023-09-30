@@ -107,6 +107,14 @@ export class ClimatiqEstimateComponent implements OnInit  {
     this.savedSearches = savedSearchRequests;
   }
 
+  deleteSavedSearch(search: SearchRequestViewModel) {
+    let savedSearchRequests: SearchRequestViewModel[] = JSON.parse(localStorage.getItem('savedSearches')!);
+    savedSearchRequests = savedSearchRequests.filter(savedSearch => savedSearch.category !== search.category && savedSearch.region !== search.region && savedSearch.sector !== search.sector && savedSearch.year !== search.year);
+    localStorage.setItem('savedSearches', JSON.stringify(savedSearchRequests));
+    this.loadSavedSearches();
+
+  }
+
   loadSavedSearch(search: SearchRequestViewModel) {
     this.selectedCategory = this.categoryDropdownData.find(category => category.name === search.category)!;
     this.selectedRegion = this.regionDropdownData.find(region => region.code === search.region)!;
