@@ -147,6 +147,7 @@ export class ClimatiqEstimateComponent implements OnInit  {
     let searchRequestViewModel = new SearchRequestViewModel(this.selectedRegion.code, this.selectedYear, this.selectedSector.name, this.selectedCategory.name);
     this.climatiqRequestService.searchAvailableEmissionFactors(searchRequestViewModel).subscribe((response: SearchResponseViewModel) => {
       this.searchResponseViewModel = response;
+      this.loadSavedSearches();
     }), (error: any) => {
       this.searchError = error;
     };
