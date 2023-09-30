@@ -114,10 +114,12 @@ export class ClimatiqEstimateComponent implements OnInit  {
 
   deleteSavedSearch(search: SearchRequestViewModel) {
     let savedSearchRequests: SearchRequestViewModel[] = JSON.parse(localStorage.getItem('savedSearches')!);
-    savedSearchRequests = savedSearchRequests.filter(savedSearch => savedSearch.category !== search.category && savedSearch.region !== search.region && savedSearch.sector !== search.sector && savedSearch.year !== search.year);
-    localStorage.setItem('savedSearches', JSON.stringify(savedSearchRequests));
-    this.loadSavedSearches();
-
+    let requestToDelete = savedSearchRequests.find(s => s.id === search.id);
+    if (requestToDelete){
+      savedSearchRequests.splice(savedSearchRequests.indexOf(requestToDelete), 1);
+      localStorage.setItem('savedSearches', JSON.stringify(savedSearchRequests));
+      this.loadSavedSearches();
+    }
   }
 
   loadSavedSearch(search: SearchRequestViewModel) {

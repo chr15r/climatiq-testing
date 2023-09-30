@@ -24,7 +24,7 @@ export class ClimatiqRequestService {
 
     this.saveSearchToCache(searchRequest);
 
-    const cachedData = localStorage.getItem(SearchRequestUtils.getQueryString(searchRequest));
+    const cachedData = localStorage.getItem(searchRequest.id);
 
     if (cachedData) {
       const parsedData = JSON.parse(cachedData);
@@ -38,7 +38,7 @@ export class ClimatiqRequestService {
         .pipe(
           tap((response) => {
             // Update the local storage with the new data
-            this.saveResponseToCache(SearchRequestUtils.getQueryString(searchRequest), response);
+            this.saveResponseToCache(searchRequest.id, response);
           })
         );
     }
@@ -51,7 +51,7 @@ export class ClimatiqRequestService {
     }
     else {
       let savedSearchRequests: SearchRequestViewModel[] = JSON.parse(localStorage.getItem('savedSearches')!);
-      let foundSearch = savedSearchRequests.find(f => SearchRequestUtils.getQueryString(f) === SearchRequestUtils.getQueryString(searchRequest));
+      let foundSearch = savedSearchRequests.find(f => f.id === searchRequest.id);
 
       if (!foundSearch) {
         savedSearchRequests.push(searchRequest);
