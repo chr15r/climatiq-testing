@@ -119,8 +119,12 @@
 
   <h4>Results</h4>
   {{ this.searchError }}
-  <div class="d-flex flex-wrap search-response" *ngFor="let result of searchResponseViewModel.results">
-    {{ result.activity_id }} - {{ result.name }}
+  <div class="search-response" *ngFor="let result of searchResponseViewModel.results">
+    <h4>{{ result.name }}</h4> <em>{{ result.description }}</em><br />
+    <em><strong>Activity Id</strong>: {{ result.activity_id }}</em><br />
+    <em><strong>Emission Factor</strong>: {{ result.name }} ({{ result.id }})</em><br />
+    <em><strong>Source LCA Activity</strong>: {{ result.source_lca_activity }}</em><br />
+    <em><strong>Unit Type</strong>: {{ result.unit_type }}</em>
   </div>
 
 </div>
