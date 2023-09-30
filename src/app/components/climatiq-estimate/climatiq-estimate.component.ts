@@ -1,13 +1,15 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { NgSelectComponent } from '@ng-select/ng-select';
-import { SearchViewModel } from 'src/app/models/viewModels/searchViewModel';
+import { SearchRequestViewModel } from 'src/app/models/viewModels/climatiq-search-models/searchRequestViewModel';
 import { Category } from 'src/app/models/viewModels/category';
 import { Region } from 'src/app/models/viewModels/region';
 import { Sector } from 'src/app/models/viewModels/sector';
 import * as regionData from '../../models/json-data/regions.json';
 import * as sectorData from '../../models/json-data/sectors.json';
 import * as categoryData from '../../models/json-data/categories.json';
+import { ClimatiqRequestService } from 'src/app/services/climatiq-request.service';
+import { SearchResponseResultsViewModel } from 'src/app/models/viewModels/climatiq-search-models/searchResponseResultsViewModel';
 
 @Component({
   selector: 'app-climatiq-estimate',
@@ -20,7 +22,8 @@ export class ClimatiqEstimateComponent implements OnInit  {
 
   @ViewChild('categoryDropdown') categoryDropdown:NgSelectComponent;
 
-  public searchViewModel: SearchViewModel = new SearchViewModel();
+  public searchRequestViewModel: SearchRequestViewModel = new SearchRequestViewModel();
+  public searchResponseViewModel: SearchResponseResultsViewModel = new SearchResponseResultsViewModel();
   public regionDropdownData: Region[] = [];
   public sectorDropdownData: Sector[] = [];
   public categoryDropdownData: Category[] = [];
@@ -28,7 +31,9 @@ export class ClimatiqEstimateComponent implements OnInit  {
 
   public basicInfoForm: UntypedFormGroup;
 
-  constructor(private fb: UntypedFormBuilder, private readonly changeDetector: ChangeDetectorRef) { }
+  constructor(private fb: UntypedFormBuilder,
+    private readonly changeDetector: ChangeDetectorRef,
+    private readonly climatiqRequestService: ClimatiqRequestService) { }
 
   ngOnInit(): void {
     this.loadDropdownData();
@@ -37,16 +42,11 @@ export class ClimatiqEstimateComponent implements OnInit  {
 
   }
 
-
-  onSubmit() {
-    console.log(this.searchViewModel);
-  }
-
   basicFormValid(): boolean {
-    return this.searchViewModel?.region.length > 0
-    && this.searchViewModel?.year.length > 0
-    && this.searchViewModel?.sector.length > 0
-    && this.searchViewModel?.category.length > 0;
+    return this.searchRequestViewModel?.region.length > 0
+    && this.searchRequestViewModel?.year.length > 0
+    && this.searchRequestViewModel?.sector.length > 0
+    && this.searchRequestViewModel?.category.length > 0;
   }
 
 
@@ -100,11 +100,11 @@ export class ClimatiqEstimateComponent implements OnInit  {
    */
 
   onYearChange(year: string) {
-    this.searchViewModel.year = year;
+    this.searchRequestViewModel.year = year;
   }
 
   onRegionChange(region: Region) {
-    this.searchViewModel.region = region.code;
+    this.searchRequestViewModel.region = region.code;
   }
 
   onSectorClear() {
@@ -112,10 +112,10 @@ export class ClimatiqEstimateComponent implements OnInit  {
   }
 
   onSectorChange(sector: Sector) {
-    this.searchViewModel.sector = sector.name;
+    this.searchRequestViewModel.sector = sector.name;
     // Reset category and load categories within chosen sector
     this.clearCategoryDropdown();
-    this.searchViewModel.category = '';
+    this.searchRequestViewModel.category = '';
     this.categoryDropdownData = this.categoryDropdownData.filter(category => category.sector === sector.name);
   }
 
@@ -125,7 +125,15 @@ export class ClimatiqEstimateComponent implements OnInit  {
   }
 
   onCategoryChange(category: Category) {
-    this.searchViewModel.category = category.name;
+    if(category)
+      this.searchRequestViewModel.category = category.name;
+  }
+
+
+  onSubmit() {
+    this.climatiqRequestService.searchAvailableEmissionFactors(this.searchRequestViewModel).subscribe((response: SearchResponseResultsViewModel) => {
+      this.searchResponseViewModel = response;
+    });
   }
 
 }

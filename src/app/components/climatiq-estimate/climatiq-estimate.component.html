@@ -1,83 +1,103 @@
 <h4>Search filters</h4>
-<p>All filters must be populated to dispoay a list of activities to choose from</p>
+<p>
+  All filters must be populated to dispoay a list of activities to choose from
+</p>
 
-      <form [formGroup]="basicInfoForm">
-        <div class="row">
-          <div class="col">
-            <label for="region">Region
-              <em>Filters emission factors by geographic region to which it applies.</em>
-            </label>
+<form [formGroup]="basicInfoForm">
+  <div class="row">
+    <div class="col">
+      <label for="region"
+        >Region
+        <em
+          >Filters emission factors by geographic region to which it
+          applies.</em
+        >
+      </label>
 
-            <ng-select
-              [items]="regionDropdownData"
-              bindLabel="name"
-              placeholder="Select Region"
-              appendTo="body"
-              [closeOnSelect]="true"
-              (change)="onRegionChange($event)"
-            >
-            </ng-select>
-          </div>
+      <ng-select
+        [items]="regionDropdownData"
+        bindLabel="name"
+        placeholder="Select Region"
+        appendTo="body"
+        [closeOnSelect]="true"
+        (change)="onRegionChange($event)"
+      >
+      </ng-select>
+    </div>
 
-          <div class="col">
-            <label for="year">Year
-              <em>Filters emission factors by the year in which the emission factor is considered most relevant, according to the source.</em>
-            </label>
-            <ng-select
-              [items]="yearsDropdownData"
-              bindLabel="name"
-              placeholder="Select Year"
-              appendTo="body"
-              [closeOnSelect]="true"
-              (change)="onYearChange($event)"
-            >
-            </ng-select>
-          </div>
-        </div>
+    <div class="col">
+      <label for="year"
+        >Year
+        <em
+          >Filters emission factors by the year in which the emission factor is
+          considered most relevant, according to the source.</em
+        >
+      </label>
+      <ng-select
+        [items]="yearsDropdownData"
+        bindLabel="name"
+        placeholder="Select Year"
+        appendTo="body"
+        [closeOnSelect]="true"
+        (change)="onYearChange($event)"
+      >
+      </ng-select>
+    </div>
+  </div>
 
-        <div class="row">
-          <div class="col">
-            <label for="sector">Sector
-              <em>Filters by emission factor sector</em>
-            </label>
-            <ng-select
-              [items]="sectorDropdownData"
-              bindLabel="name"
-              placeholder="Select Sector"
-              appendTo="body"
-              [closeOnSelect]="true"
-              (clear)="onSectorClear()"
-              (change)="onSectorChange($event)"
-            >
-            </ng-select>
-          </div>
-          <div class="col">
-            <label for="sector">Category
-              <em>Filters by emission factor category. This dropdown will change depending on what sector you choose</em>
-            </label>
-            <ng-select
-              #categoryDropdown
-              [items]="categoryDropdownData"
-              bindLabel="name"
-              placeholder="Select Category"
-              appendTo="body"
-              [closeOnSelect]="true"
-              (change)="onCategoryChange($event)"
-            >
-            </ng-select>
-          </div>
-        </div>
+  <div class="row">
+    <div class="col">
+      <label for="sector"
+        >Sector
+        <em>Filters by emission factor sector</em>
+      </label>
+      <ng-select
+        [items]="sectorDropdownData"
+        bindLabel="name"
+        placeholder="Select Sector"
+        appendTo="body"
+        [closeOnSelect]="true"
+        (clear)="onSectorClear()"
+        (change)="onSectorChange($event)"
+      >
+      </ng-select>
+    </div>
+    <div class="col">
+      <label for="sector"
+        >Category
+        <em
+          >Filters by emission factor category. This dropdown will change
+          depending on what sector you choose</em
+        >
+      </label>
+      <ng-select
+        #categoryDropdown
+        [items]="categoryDropdownData"
+        bindLabel="name"
+        placeholder="Select Category"
+        appendTo="body"
+        [closeOnSelect]="true"
+        (change)="onCategoryChange($event)"
+      >
+      </ng-select>
+    </div>
+  </div>
 
-        <div class="row" style="margin-top: 10px">
-          <div class="col">
-            <button
-              class="btn btn-primary"
-              type="submit"
-              [disabled]="!basicFormValid()"
-              (click)="onSubmit()"
-            >
-              Search
-            </button>
-          </div>
-        </div>
-      </form>
+  <div class="row" style="margin-top: 10px">
+    <div class="col">
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="!basicFormValid()"
+        (click)="onSubmit()"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+</form>
+
+<h4>Results</h4>
+
+{{ searchResponseViewModel }}
+

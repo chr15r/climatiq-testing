@@ -6,7 +6,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ClimatiqEstimateComponent } from './components/climatiq-estimate/climatiq-estimate.component';
-
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpInterceptorService } from './services/http-interceptor.service';
+import { ClimatiqRequestService } from './services/climatiq-request.service';
 
 @NgModule({
   declarations: [
@@ -19,9 +21,18 @@ import { ClimatiqEstimateComponent } from './components/climatiq-estimate/climat
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    HttpClientModule
+
   ],
-  providers: [],
+  providers: [
+    ClimatiqRequestService,
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi   : true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
