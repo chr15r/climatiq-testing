@@ -1,23 +1,73 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SearchRequestViewModel } from '../models/viewModels/climatiq-search-models/searchRequestViewModel';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { SearchResponseViewModel } from '../models/viewModels/climatiq-search-models/searchResponseViewModel';
+import { SearchRequestUtils } from '../utils/searchRequestUtils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClimatiqRequestService {
-  private apiUrl: string;
+  private searchUrl: string;
   private requestEndString: string;
 
   constructor(private http: HttpClient) {
-    this.apiUrl = 'https://beta4.api.climatiq.io';
+    this.searchUrl = 'https://beta4.api.climatiq.io/search?';
     this.requestEndString = '&data_version=5.5&results_per_page=100';
   }
 
-  searchAvailableEmissionFactors(searchRequest: SearchRequestViewModel): Observable<SearchResponseViewModel> {
-    const queryString = `search?region=${searchRequest.region}&year=${searchRequest.year}&sector=${searchRequest.sector}&category=${searchRequest.category}&${this.requestEndString}`;
-    return this.http.get<SearchResponseViewModel>(`${this.apiUrl}/${queryString}`);
+  /// save this in a cache or make
+  searchAvailableEmissionFactors(
+    searchRequest: SearchRequestViewModel
+  ): Observable<SearchResponseViewModel> {
+
+    this.saveSearchToCache(searchRequest);
+
+    const cachedData = localStorage.getItem(SearchRequestUtils.getQueryString(searchRequest));
+
+    if (cachedData) {
+      const parsedData = JSON.parse(cachedData);
+      return new Observable((observer) => {
+        observer.next(parsedData);
+        observer.complete();
+      });
+    } else {
+      return this.http
+        .get<SearchResponseViewModel>(`${this.searchUrl}${SearchRequestUtils.getQueryString(searchRequest)}${this.requestEndString}`)
+        .pipe(
+          tap((response) => {
+            // Update the local storage with the new data
+            this.saveResponseToCache(SearchRequestUtils.getQueryString(searchRequest), response);
+          })
+        );
+    }
   }
+
+  private saveSearchToCache(searchRequest: SearchRequestViewModel) {
+    var localStorageValue = localStorage.getItem('savedSearches');
+    if (localStorageValue === null) {
+      localStorage.setItem('savedSearches', JSON.stringify([searchRequest]));
+    }
+    else {
+      let savedSearchRequests: SearchRequestViewModel[] = JSON.parse(localStorage.getItem('savedSearches')!);
+      let foundSearch = savedSearchRequests.find(f => SearchRequestUtils.getQueryString(f) === SearchRequestUtils.getQueryString(searchRequest));
+
+      if (!foundSearch) {
+        savedSearchRequests.push(searchRequest);
+        localStorage.setItem('savedSearches', JSON.stringify(savedSearchRequests));
+      }
+    }
+  }
+
+  // Function to update the local storage with new data
+  private saveResponseToCache(key: string, data: any): void {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+
+  // Function to clear data from local storage (if needed)
+  clearLocalStorage(key: string): void {
+    localStorage.removeItem(key);
+  }
+
 }

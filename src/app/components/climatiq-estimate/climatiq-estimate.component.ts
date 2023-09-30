@@ -9,7 +9,6 @@ import * as regionData from '../../models/json-data/regions.json';
 import * as sectorData from '../../models/json-data/sectors.json';
 import * as categoryData from '../../models/json-data/categories.json';
 import { ClimatiqRequestService } from 'src/app/services/climatiq-request.service';
-import { SearchResponseResultsViewModel } from 'src/app/models/viewModels/climatiq-search-models/searchResponseResultsViewModel';
 import { SearchResponseViewModel } from 'src/app/models/viewModels/climatiq-search-models/searchResponseViewModel';
 
 @Component({
@@ -22,13 +21,23 @@ export class ClimatiqEstimateComponent implements OnInit  {
   title = 'climatiq';
 
   @ViewChild('categoryDropdown') categoryDropdown:NgSelectComponent;
+  @ViewChild('regionDropdown') regionDropdown:NgSelectComponent;
+  @ViewChild('yearDropDown') yearDropDown:NgSelectComponent;
+  @ViewChild('sectorDropdown') sectorDropdown:NgSelectComponent;
 
-  public searchRequestViewModel: SearchRequestViewModel = new SearchRequestViewModel();
   public searchResponseViewModel: SearchResponseViewModel = new SearchResponseViewModel();
+  public savedSearches: SearchRequestViewModel[] = [];
+  public searchError: string = ''
   public regionDropdownData: Region[] = [];
   public sectorDropdownData: Sector[] = [];
+
   public categoryDropdownData: Category[] = [];
   public yearsDropdownData: string[] = ['2018', '2019', '2020', '2021', '2022', '2023', '2024'];
+
+  public selectedRegion: Region;
+  public selectedSector: Sector;
+  public selectedCategory: Category;
+  public selectedYear: string;
 
   public basicInfoForm: UntypedFormGroup;
 
@@ -37,19 +46,12 @@ export class ClimatiqEstimateComponent implements OnInit  {
     private readonly climatiqRequestService: ClimatiqRequestService) { }
 
   ngOnInit(): void {
+    this.loadSavedSearches();
     this.loadDropdownData();
     this.basicInfoForm = this.fb.group({});
     this.changeDetector.detectChanges();
 
   }
-
-  basicFormValid(): boolean {
-    return this.searchRequestViewModel?.region.length > 0
-    && this.searchRequestViewModel?.year.length > 0
-    && this.searchRequestViewModel?.sector.length > 0
-    && this.searchRequestViewModel?.category.length > 0;
-  }
-
 
   /**
    * Loading form dropdown data
@@ -97,26 +99,32 @@ export class ClimatiqEstimateComponent implements OnInit  {
   }
 
   /**
-   * Form dropdown events
+   * Load existing search reequests
    */
 
-  onYearChange(year: string) {
-    this.searchRequestViewModel.year = year;
+  loadSavedSearches() {
+    let savedSearchRequests: SearchRequestViewModel[] = JSON.parse(localStorage.getItem('savedSearches')!);
+    this.savedSearches = savedSearchRequests;
   }
 
-  onRegionChange(region: Region) {
-    this.searchRequestViewModel.region = region.code;
+  loadSavedSearch(search: SearchRequestViewModel) {
+    this.selectedCategory = this.categoryDropdownData.find(category => category.name === search.category)!;
+    this.selectedRegion = this.regionDropdownData.find(region => region.code === search.region)!;
+    this.selectedSector = this.sectorDropdownData.find(sector => sector.name === search.sector)!;
+    this.selectedYear = search.year;
   }
+
+  /**
+   * Form dropdown events
+   */
 
   onSectorClear() {
     this.clearCategoryDropdown();
   }
 
   onSectorChange(sector: Sector) {
-    this.searchRequestViewModel.sector = sector.name;
     // Reset category and load categories within chosen sector
     this.clearCategoryDropdown();
-    this.searchRequestViewModel.category = '';
     this.categoryDropdownData = this.categoryDropdownData.filter(category => category.sector === sector.name);
   }
 
@@ -125,16 +133,18 @@ export class ClimatiqEstimateComponent implements OnInit  {
     this.categoryDropdown.handleClearClick();
   }
 
-  onCategoryChange(category: Category) {
-    if(category)
-      this.searchRequestViewModel.category = category.name;
+  searchRequestValid(): boolean {
+    return this.selectedCategory?.name.length > 0 && this.selectedRegion?.name.length > 0 && this.selectedSector?.name.length > 0 && this.selectedYear.length > 0 ? true : false;
   }
 
-
   onSubmit() {
-    this.climatiqRequestService.searchAvailableEmissionFactors(this.searchRequestViewModel).subscribe((response: SearchResponseViewModel) => {
+    this.searchError = '';
+    let searchRequestViewModel = new SearchRequestViewModel(this.selectedRegion.code, this.selectedYear, this.selectedSector.name, this.selectedCategory.name);
+    this.climatiqRequestService.searchAvailableEmissionFactors(searchRequestViewModel).subscribe((response: SearchResponseViewModel) => {
       this.searchResponseViewModel = response;
-    });
+    }), (error: any) => {
+      this.searchError = error;
+    };
   }
 
 }
