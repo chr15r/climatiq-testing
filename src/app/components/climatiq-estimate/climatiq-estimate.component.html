@@ -99,5 +99,9 @@
 
 <h4>Results</h4>
 
-{{ searchResponseViewModel }}
+<div *ngIf="searchResponseViewModel">
+    <div *ngFor="let result of searchResponseViewModel.results">
+        {{ result.activity_id }} - {{ result.name }}
 
+    </div>
+</div>

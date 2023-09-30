@@ -10,6 +10,7 @@ import * as sectorData from '../../models/json-data/sectors.json';
 import * as categoryData from '../../models/json-data/categories.json';
 import { ClimatiqRequestService } from 'src/app/services/climatiq-request.service';
 import { SearchResponseResultsViewModel } from 'src/app/models/viewModels/climatiq-search-models/searchResponseResultsViewModel';
+import { SearchResponseViewModel } from 'src/app/models/viewModels/climatiq-search-models/searchResponseViewModel';
 
 @Component({
   selector: 'app-climatiq-estimate',
@@ -23,7 +24,7 @@ export class ClimatiqEstimateComponent implements OnInit  {
   @ViewChild('categoryDropdown') categoryDropdown:NgSelectComponent;
 
   public searchRequestViewModel: SearchRequestViewModel = new SearchRequestViewModel();
-  public searchResponseViewModel: SearchResponseResultsViewModel = new SearchResponseResultsViewModel();
+  public searchResponseViewModel: SearchResponseViewModel = new SearchResponseViewModel();
   public regionDropdownData: Region[] = [];
   public sectorDropdownData: Sector[] = [];
   public categoryDropdownData: Category[] = [];
@@ -131,7 +132,7 @@ export class ClimatiqEstimateComponent implements OnInit  {
 
 
   onSubmit() {
-    this.climatiqRequestService.searchAvailableEmissionFactors(this.searchRequestViewModel).subscribe((response: SearchResponseResultsViewModel) => {
+    this.climatiqRequestService.searchAvailableEmissionFactors(this.searchRequestViewModel).subscribe((response: SearchResponseViewModel) => {
       this.searchResponseViewModel = response;
     });
   }
