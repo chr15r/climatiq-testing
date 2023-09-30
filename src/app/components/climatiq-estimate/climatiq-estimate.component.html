@@ -46,6 +46,7 @@
               placeholder="Select Sector"
               appendTo="body"
               [closeOnSelect]="true"
+              (clear)="onSectorClear()"
               (change)="onSectorChange($event)"
             >
             </ng-select>

@@ -1,4 +1,4 @@
-export class BasicInfoViewModel {
+export class SearchViewModel {
    region: string;
    year: string;
    sector: string;

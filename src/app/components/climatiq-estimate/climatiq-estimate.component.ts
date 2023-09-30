@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { NgSelectComponent } from '@ng-select/ng-select';
-import { BasicInfoViewModel } from 'src/app/models/viewModels/basicInfoViewModel';
+import { SearchViewModel } from 'src/app/models/viewModels/searchViewModel';
 import { Category } from 'src/app/models/viewModels/category';
 import { Region } from 'src/app/models/viewModels/region';
 import { Sector } from 'src/app/models/viewModels/sector';
@@ -20,7 +20,7 @@ export class ClimatiqEstimateComponent implements OnInit  {
 
   @ViewChild('categoryDropdown') categoryDropdown:NgSelectComponent;
 
-  public basicInfoViewModel: BasicInfoViewModel = new BasicInfoViewModel();
+  public searchViewModel: SearchViewModel = new SearchViewModel();
   public regionDropdownData: Region[] = [];
   public sectorDropdownData: Sector[] = [];
   public categoryDropdownData: Category[] = [];
@@ -39,14 +39,14 @@ export class ClimatiqEstimateComponent implements OnInit  {
 
 
   onSubmit() {
-    console.log(this.basicInfoViewModel);
+    console.log(this.searchViewModel);
   }
 
   basicFormValid(): boolean {
-    return this.basicInfoViewModel?.region.length > 0
-    && this.basicInfoViewModel?.year.length > 0
-    && this.basicInfoViewModel?.sector.length > 0
-    && this.basicInfoViewModel?.category.length > 0;
+    return this.searchViewModel?.region.length > 0
+    && this.searchViewModel?.year.length > 0
+    && this.searchViewModel?.sector.length > 0
+    && this.searchViewModel?.category.length > 0;
   }
 
 
@@ -100,28 +100,32 @@ export class ClimatiqEstimateComponent implements OnInit  {
    */
 
   onYearChange(year: string) {
-    this.basicInfoViewModel.year = year;
+    this.searchViewModel.year = year;
   }
 
   onRegionChange(region: Region) {
-    this.basicInfoViewModel.region = region.code;
+    this.searchViewModel.region = region.code;
+  }
+
+  onSectorClear() {
+    this.clearCategoryDropdown();
   }
 
   onSectorChange(sector: Sector) {
-    this.basicInfoViewModel.sector = sector.name;
-
+    this.searchViewModel.sector = sector.name;
     // Reset category and load categories within chosen sector
-    this.basicInfoViewModel.category = '';
-
-    this.loadCategoryDropdown();
+    this.clearCategoryDropdown();
+    this.searchViewModel.category = '';
     this.categoryDropdownData = this.categoryDropdownData.filter(category => category.sector === sector.name);
+  }
 
+  clearCategoryDropdown() {
+    this.loadCategoryDropdown();
     this.categoryDropdown.handleClearClick();
-
   }
 
   onCategoryChange(category: Category) {
-    this.basicInfoViewModel.category = category.name;
+    this.searchViewModel.category = category.name;
   }
 
 }
