@@ -39,18 +39,23 @@ export class ClimatiqEstimateComponent implements OnInit  {
   public selectedCategory: Category;
   public selectedYear: string;
 
-  public basicInfoForm: UntypedFormGroup;
-
   constructor(private fb: UntypedFormBuilder,
     private readonly changeDetector: ChangeDetectorRef,
     private readonly climatiqRequestService: ClimatiqRequestService) { }
 
   ngOnInit(): void {
+    this.loadForm();
+  }
+
+  loadForm() {
+    this.selectedRegion = new Region('', '');
+    this.selectedSector = new Sector('');
+    this.selectedCategory = new Category('', '');
+    this.selectedYear = '';
+    this.searchResponseViewModel = new SearchResponseViewModel();
     this.loadSavedSearches();
     this.loadDropdownData();
-    this.basicInfoForm = this.fb.group({});
     this.changeDetector.detectChanges();
-
   }
 
   /**
@@ -120,6 +125,7 @@ export class ClimatiqEstimateComponent implements OnInit  {
     this.selectedRegion = this.regionDropdownData.find(region => region.code === search.region)!;
     this.selectedSector = this.sectorDropdownData.find(sector => sector.name === search.sector)!;
     this.selectedYear = search.year;
+    this.onSubmit();
   }
 
   /**
@@ -148,6 +154,10 @@ export class ClimatiqEstimateComponent implements OnInit  {
 
   searchRequestValid(): boolean {
     return this.selectedCategory?.name.length > 0 && this.selectedRegion?.name.length > 0 && this.selectedSector?.name.length > 0 && this.selectedYear.length > 0 ? true : false;
+  }
+
+  onClear() {
+    this.loadForm();
   }
 
   onSubmit() {
