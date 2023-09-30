@@ -66,7 +66,10 @@ export class AppComponent implements OnInit {
   }
 
   basicFormValid(): boolean {
-    return this.basicInfoViewModel?.region.length > 0 && this.basicInfoViewModel?.year.length > 0;
+    return this.basicInfoViewModel?.region.length > 0
+    && this.basicInfoViewModel?.year.length > 0
+    && this.basicInfoViewModel?.sector.length > 0
+    && this.basicInfoViewModel?.category.length > 0;
   }
 
   onYearChange(year: string) {
