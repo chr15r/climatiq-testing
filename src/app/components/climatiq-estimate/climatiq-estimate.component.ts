@@ -133,6 +133,11 @@ export class ClimatiqEstimateComponent implements OnInit  {
     this.categoryDropdown.handleClearClick();
   }
 
+  /**
+   *
+   * Form submission & validation
+   */
+
   searchRequestValid(): boolean {
     return this.selectedCategory?.name.length > 0 && this.selectedRegion?.name.length > 0 && this.selectedSector?.name.length > 0 && this.selectedYear.length > 0 ? true : false;
   }
