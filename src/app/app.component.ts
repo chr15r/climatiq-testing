@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import * as regionData from './models/json-data/regions.json';
 import * as sectorData from './models/json-data/sectors.json';
 import * as categoryData from './models/json-data/categories.json';
@@ -7,6 +7,7 @@ import { Region } from './models/viewModels/region';
 import { BasicInfoViewModel } from './models/viewModels/basicInfoViewModel';
 import { Sector } from './models/viewModels/sector';
 import { Category } from './models/viewModels/category';
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-root',
@@ -15,14 +16,16 @@ import { Category } from './models/viewModels/category';
 })
 export class AppComponent implements OnInit {
   title = 'climatiq';
-  public basicInfoViewModel: BasicInfoViewModel = new BasicInfoViewModel();
 
+  @ViewChild('categoryDropdown') categoryDropdown:NgSelectComponent;
+
+  public basicInfoViewModel: BasicInfoViewModel = new BasicInfoViewModel();
   public regionDropdownData: Region[] = [];
   public sectorDropdownData: Sector[] = [];
   public categoryDropdownData: Category[] = [];
+  public yearsDropdownData: string[] = ['2018', '2019', '2020', '2021', '2022', '2023', '2024'];
 
   public basicInfoForm: UntypedFormGroup;
-  public yearsDropdownData: string[] = ['2018', '2019', '2020', '2021', '2022', '2023', '2024'];
 
   constructor(private fb: UntypedFormBuilder, private readonly changeDetector: ChangeDetectorRef) { }
 
@@ -33,33 +36,6 @@ export class AppComponent implements OnInit {
 
   }
 
-  loadDropdownData() {
-    const regionDataString: string = JSON.stringify(regionData);
-    const regionDropdownData = JSON.parse(regionDataString) as Region[];
-    Array.from(regionDropdownData).forEach(element => {
-      let region: Region = new Region(element.name, element.code);
-      this.regionDropdownData.push(region);
-    });
-
-    const sectorDataString: string = JSON.stringify(sectorData);
-    const sectorDropdownData = JSON.parse(sectorDataString) as string[];
-    Array.from(sectorDropdownData).forEach(element => {
-      let sector: Sector = new Sector(element);
-      this.sectorDropdownData.push(sector);
-    });
-
-    const categoryDataString: string = JSON.stringify(categoryData);
-    const categoryDropdownData = JSON.parse(categoryDataString) as Category[];
-    Array.from(categoryDropdownData).forEach(element => {
-      let category: Category = new Category(element.name, element.sector);
-      this.categoryDropdownData.push(category);
-    });
-
-    this.categoryDropdownData = this.categoryDropdownData.sort((a, b) => a.name.localeCompare(b.name));
-    this.regionDropdownData = this.regionDropdownData.sort((a, b) => a.name.localeCompare(b.name));
-    this.sectorDropdownData = this.sectorDropdownData.sort((a, b) => a.name.localeCompare(b.name));
-
-  }
 
   onSubmit() {
     console.log(this.basicInfoViewModel);
@@ -72,6 +48,56 @@ export class AppComponent implements OnInit {
     && this.basicInfoViewModel?.category.length > 0;
   }
 
+
+  /**
+   * Loading form dropdown data
+   */
+  loadDropdownData() {
+
+    this.loadRegionDropdown();
+    this.loadSectorDropdown();
+    this.loadCategoryDropdown();
+  }
+
+
+  loadRegionDropdown() {
+    this.regionDropdownData = [];
+    const regionDataString: string = JSON.stringify(regionData);
+    const regionDropdownData = JSON.parse(regionDataString) as Region[];
+    Array.from(regionDropdownData).forEach(element => {
+      let region: Region = new Region(element.name, element.code);
+      this.regionDropdownData.push(region);
+    });
+    this.regionDropdownData = this.regionDropdownData.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  loadSectorDropdown() {
+    this.sectorDropdownData = [];
+    const sectorDataString: string = JSON.stringify(sectorData);
+    const sectorDropdownData = JSON.parse(sectorDataString) as string[];
+    Array.from(sectorDropdownData).forEach(element => {
+      let sector: Sector = new Sector(element);
+      this.sectorDropdownData.push(sector);
+    });
+    this.sectorDropdownData = this.sectorDropdownData.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  loadCategoryDropdown() {
+    this.categoryDropdownData = [];
+    const categoryDataString: string = JSON.stringify(categoryData);
+    const categoryDropdownData = JSON.parse(categoryDataString) as Category[];
+    Array.from(categoryDropdownData).forEach(element => {
+      let category: Category = new Category(element.name, element.sector);
+      this.categoryDropdownData.push(category);
+    });
+
+    this.categoryDropdownData = this.categoryDropdownData.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  /**
+   * Form dropdown events
+   */
+
   onYearChange(year: string) {
     this.basicInfoViewModel.year = year;
   }
@@ -82,6 +108,15 @@ export class AppComponent implements OnInit {
 
   onSectorChange(sector: Sector) {
     this.basicInfoViewModel.sector = sector.name;
+
+    // Reset category and load categories within chosen sector
+    this.basicInfoViewModel.category = '';
+
+    this.loadCategoryDropdown();
+    this.categoryDropdownData = this.categoryDropdownData.filter(category => category.sector === sector.name);
+
+    this.categoryDropdown.handleClearClick();
+
   }
 
   onCategoryChange(category: Category) {
