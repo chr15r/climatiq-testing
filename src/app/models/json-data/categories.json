@@ -1,0 +1,141 @@
+[
+  { "name" : "Agriculture/Hunting/Forestry/Fishing", "sector": "Agriculture/Hunting/Forestry/Fishing" },
+  { "name" : "Arable Farming", "sector": "Agriculture/Hunting/Forestry/Fishing" },
+  { "name" : "Fishing/Aquaculture/Hunting", "sector": "Agriculture/Hunting/Forestry/Fishing" },
+  { "name" : "Livestock Farming", "sector": "Agriculture/Hunting/Forestry/Fishing" },
+  { "name" : "Timber and Forestry Products", "sector": "Agriculture/Hunting/Forestry/Fishing" },
+
+  { "name" : "Construction", "sector": "Buildings and Infrastructure" },
+  { "name" : "Housing", "sector": "Buildings and Infrastructure" },
+  { "name" : "Infrastructure", "sector": "Buildings and Infrastructure" },
+  { "name" : "Maintenance and Repair", "sector": "Buildings and Infrastructure" },
+  { "name" : "Pavement and Surfacing", "sector": "Buildings and Infrastructure" },
+  { "name" : "Real Estate", "sector": "Buildings and Infrastructure" },
+
+  { "name" : "Clothing and Footwear", "sector": "Consumer Goods and Services" },
+  { "name" : "Consumer Goods Rental", "sector": "Consumer Goods and Services" },
+  { "name" : "Domestic Services", "sector": "Consumer Goods and Services" },
+  { "name" : "Food/Beverages/Tobacco", "sector": "Consumer Goods and Services" },
+  { "name" : "Furnishings and Household", "sector": "Consumer Goods and Services" },
+  { "name" : "General Retail", "sector": "Consumer Goods and Services" },
+  { "name" : "Health Care", "sector": "Consumer Goods and Services" },
+  { "name" : "Paper Products", "sector": "Consumer Goods and Services" },
+  { "name" : "Personal Care and Accessories", "sector": "Consumer Goods and Services" },
+  { "name" : "Professional Services and Activities", "sector": "Consumer Goods and Services" },
+  { "name" : "Recreation and Culture", "sector": "Consumer Goods and Services" },
+  { "name" : "Textiles", "sector": "Consumer Goods and Services" },
+  { "name" : "Vehicle Maintenance and Services", "sector": "Consumer Goods and Services" },
+
+  { "name" : "Education", "sector": "Education" },
+
+  { "name" : "Electricity", "sector": "Energy" },
+  { "name" : "Energy Services", "sector": "Education" },
+  { "name" : "Fuel", "sector": "Education" },
+  { "name" : "Heat and Steam", "sector": "Education" },
+
+  { "name" : "Electrical Equipment", "sector": "Equipment" },
+  { "name" : "Electronics", "sector": "Equipment" },
+  { "name" : "Equipment Rental", "sector": "Equipment" },
+  { "name" : "Equipment Repair", "sector": "Equipment" },
+  { "name" : "Machinery", "sector": "Equipment" },
+  { "name" : "Office Equipment", "sector": "Equipment" },
+  { "name" : "Storage", "sector": "Equipment" },
+
+  { "name" : "Health Care", "sector": "Health and Social Care" },
+  { "name" : "Health and Social Care", "sector": "Health and Social Care" },
+  { "name" : "Social Care", "sector": "Health and Social Care" },
+
+  { "name" : "Cloud Computing - CPU", "sector": "Information and Communication" },
+  { "name" : "Cloud Computing - Memory", "sector": "Information and Communication" },
+  { "name" : "Cloud Computing - Networking", "sector": "Information and Communication" },
+  { "name" : "Cloud Computing - Storage", "sector": "Information and Communication" },
+  { "name" : "Information and Communication Services", "sector": "Information and Communication" },
+
+  { "name" : "Financial Services", "sector": "Insurance and Financial Services" },
+  { "name" : "Insurance Services", "sector": "Insurance and Financial Services" },
+
+  { "name" : "Land Use Change", "sector": "Land Use" },
+
+  { "name" : "Building Materials", "sector": "Materials and Manufacturing" },
+  { "name" : "Ceramic Goods", "sector": "Materials and Manufacturing" },
+  { "name" : "Chemical Products", "sector": "Materials and Manufacturing" },
+  { "name" : "Fabricated Metal Products", "sector": "Materials and Manufacturing" },
+  { "name" : "Glass Products", "sector": "Materials and Manufacturing" },
+  { "name" : "Glass and Glass Products", "sector": "Materials and Manufacturing" },
+  { "name" : "Manufacturing", "sector": "Materials and Manufacturing" },
+  { "name" : "Metals", "sector": "Materials and Manufacturing" },
+  { "name" : "Mined Materials", "sector": "Materials and Manufacturing" },
+  { "name" : "Mining", "sector": "Materials and Manufacturing" },
+  { "name" : "Organic Products", "sector": "Materials and Manufacturing" },
+  { "name" : "Other Materials", "sector": "Materials and Manufacturing" },
+  { "name" : "Paper and Cardboard", "sector": "Materials and Manufacturing" },
+  { "name" : "Plastics and Rubber Products", "sector": "Materials and Manufacturing" },
+  { "name" : "Textiles", "sector": "Materials and Manufacturing" },
+  { "name" : "Vehicle Parts", "sector": "Materials and Manufacturing" },
+
+  { "name" : "Government Activities", "sector": "Organizational Activities" },
+  { "name" : "Homeworking", "sector": "Organizational Activities" },
+  { "name" : "Non-profit Activities", "sector": "Organizational Activities" },
+  { "name" : "Operational Activities", "sector": "Organizational Activities" },
+  { "name" : "Organizational Activities", "sector": "Organizational Activities" },
+  { "name" : "Professional Services and Activities", "sector": "Organizational Activities" },
+  { "name" : "Wholesale Trade", "sector": "Organizational Activities" },
+
+  { "name" : "Refrigerants and Fugitive Gases", "sector": "Refrigerants and Fugitive Gases" },
+
+  { "name" : "Accommodation", "sector": "Restaurants and Accommodation" },
+  { "name" : "Food and Beverage Services", "sector": "Restaurants and Accommodation" },
+  { "name" : "Restaurants and Accommodation", "sector": "Restaurants and Accommodation" },
+
+  { "name" : "Air Freight", "sector": "Transport" },
+  { "name" : "Air Travel", "sector": "Transport" },
+  { "name" : "Rail Freight", "sector": "Transport" },
+  { "name" : "Rail Travel", "sector": "Transport" },
+  { "name" : "Road Freight", "sector": "Transport" },
+  { "name" : "Road Travel", "sector": "Transport" },
+  { "name" : "Sea Freight", "sector": "Transport" },
+  { "name" : "Sea Travel", "sector": "Transport" },
+  { "name" : "Tickets and Passes", "sector": "Transport" },
+  { "name" : "Transport Services and Warehousing", "sector": "Transport" },
+  { "name" : "Vehicles", "sector": "Transport" },
+
+  { "name" : "Construction Waste", "sector": "Waste" },
+  { "name" : "Electrical Waste", "sector": "Waste" },
+  { "name" : "Food and Organic Waste", "sector": "Waste" },
+  { "name" : "General Waste", "sector": "Waste" },
+  { "name" : "Glass Waste", "sector": "Waste" },
+  { "name" : "Metal Waste", "sector": "Waste" },
+  { "name" : "Paper and Cardboard Waste", "sector": "Waste" },
+  { "name" : "Plastic Waste", "sector": "Waste" },
+  { "name" : "Waste Management", "sector": "Waste" },
+  { "name" : "Waste Product", "sector": "Waste" },
+
+  { "name" : "Water Supply", "sector": "Water" },
+  { "name" : "Water Treatment", "sector": "Water" }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]
