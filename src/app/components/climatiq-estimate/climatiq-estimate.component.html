@@ -5,133 +5,173 @@
 
 <em>Previous Searches:</em>
 <div *ngFor="let savedSearch of savedSearches" class="saved-search">
- <button (click)="populateSavedSearch(savedSearch)" class="btn btn-primary">Use</button> &nbsp;
- <button (click)="deleteSavedSearch(savedSearch)" class="btn btn-danger">Delete</button> &nbsp;
- <strong>Region:</strong> {{ savedSearch.region }} | <strong>Year:</strong> {{ savedSearch.year }} | <strong>Sector</strong> {{ savedSearch.sector }} | <strong>Category</strong> {{ savedSearch.category }}
+  <button (click)="populateSavedSearch(savedSearch)" class="btn btn-primary">
+    Use
+  </button>
+  &nbsp;
+  <button (click)="deleteSavedSearch(savedSearch)" class="btn btn-danger">
+    Delete
+  </button>
+  &nbsp; <strong>Region:</strong> {{ savedSearch.region }} |
+  <strong>Year:</strong> {{ savedSearch.year }} | <strong>Sector</strong>
+  {{ savedSearch.sector }} | <strong>Category</strong>
+  {{ savedSearch.category }}
 </div>
 
-
-  <div class="row">
-    <div class="col">
-      <label for="region"
-        >Region
-        <em
-          >Filters emission factors by geographic region to which it
-          applies.</em
-        >
-      </label>
-
-      <ng-select
-        #regionDropdown
-        [items]="regionDropdownData"
-        [(ngModel)]="selectedRegion"
-        bindLabel="name"
-        placeholder="Select Region"
-        appendTo="body"
-        [closeOnSelect]="true"
+<div class="row">
+  <div class="col">
+    <label for="region"
+      >Region
+      <em
+        >Filters emission factors by geographic region to which it applies.</em
       >
-      </ng-select>
-    </div>
+    </label>
 
-    <div class="col">
-      <label for="year"
-        >Year
-        <em
-          >Filters emission factors by the year in which the emission factor is
-          considered most relevant, according to the source.</em
-        >
-      </label>
-      <ng-select
-        #yearDropDown
-        [items]="yearsDropdownData"
-        [(ngModel)]="selectedYear"
-        bindLabel="name"
-        placeholder="Select Year"
-        appendTo="body"
-        [closeOnSelect]="true"
-      >
-      </ng-select>
-    </div>
+    <ng-select
+      #regionDropdown
+      [items]="regionDropdownData"
+      [(ngModel)]="selectedRegion"
+      bindLabel="name"
+      placeholder="Select Region"
+      appendTo="body"
+      [closeOnSelect]="true"
+    >
+    </ng-select>
   </div>
 
-  <div class="row">
-    <div class="col">
-      <label for="sector"
-        >Sector
-        <em>Filters by emission factor sector</em>
-      </label>
-      <ng-select
-        #sectorDropdown
-        [items]="sectorDropdownData"
-        [(ngModel)]="selectedSector"
-        bindLabel="name"
-        placeholder="Select Sector"
-        appendTo="body"
-        [closeOnSelect]="true"
-        (clear)="onSectorClear()"
-        (change)="onSectorChange($event)"
+  <div class="col">
+    <label for="year"
+      >Year
+      <em
+        >Filters emission factors by the year in which the emission factor is
+        considered most relevant, according to the source.</em
       >
-      </ng-select>
-    </div>
-    <div class="col">
-      <label for="sector"
-        >Category
-        <em
-          >Filters by emission factor category. This dropdown will change
-          depending on what sector you choose</em
-        >
-      </label>
-      <ng-select
-        #categoryDropdown
-        [items]="categoryDropdownData"
-        [(ngModel)]="selectedCategory"
-        bindLabel="name"
-        placeholder="Select Category"
-        appendTo="body"
-        [closeOnSelect]="true"
-      >
-      </ng-select>
-    </div>
+    </label>
+    <ng-select
+      #yearDropDown
+      [items]="yearsDropdownData"
+      [(ngModel)]="selectedYear"
+      bindLabel="name"
+      placeholder="Select Year"
+      appendTo="body"
+      [closeOnSelect]="true"
+    >
+    </ng-select>
   </div>
+</div>
 
-  <div class="row" style="margin-top: 10px">
-    <div class="col">
-      <button
-        class="btn btn-primary"
-        type="submit"
-        [disabled]="!searchRequestValid()"
-        (click)="onSubmit()"
-      >
-        Search Emission factors
-      </button>
-      &nbsp;
-      <button
-        class="btn btn-info"
-        (click)="onClear()"
-      >
-        Clear
-      </button>
-
-      &nbsp;
-      <button *ngIf="showSaveSearchButton"
-        class="btn btn-info"
-        (click)="onSaveSearch()"
-      >
-        Save Search
-      </button>
-    </div>
+<div class="row">
+  <div class="col">
+    <label for="sector"
+      >Sector
+      <em>Filters by emission factor sector</em>
+    </label>
+    <ng-select
+      #sectorDropdown
+      [items]="sectorDropdownData"
+      [(ngModel)]="selectedSector"
+      bindLabel="name"
+      placeholder="Select Sector"
+      appendTo="body"
+      [closeOnSelect]="true"
+      (clear)="onSectorClear()"
+      (change)="onSectorChange($event)"
+    >
+    </ng-select>
   </div>
+  <div class="col">
+    <label for="sector"
+      >Category
+      <em
+        >Filters by emission factor category. This dropdown will change
+        depending on what sector you choose</em
+      >
+    </label>
+    <ng-select
+      #categoryDropdown
+      [items]="categoryDropdownData"
+      [(ngModel)]="selectedCategory"
+      bindLabel="name"
+      placeholder="Select Category"
+      appendTo="body"
+      [closeOnSelect]="true"
+    >
+    </ng-select>
+  </div>
+</div>
 
+<div class="row" style="margin-top: 10px">
+  <div class="col">
+    <button
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="!searchRequestValid()"
+      (click)="onSubmit()"
+    >
+      Search Emission factors
+    </button>
+    &nbsp;
+    <button class="btn btn-info" (click)="onClear()">Clear</button>
 
-<div *ngIf="searchResponseViewModel" style="margin-top: 10px;">
+    &nbsp;
+    <button
+      *ngIf="showSaveSearchButton"
+      class="btn btn-info"
+      (click)="onSaveSearch()"
+    >
+      Save Search
+    </button>
+  </div>
+</div>
+
+<div *ngIf="searchResponseViewModel" style="margin-top: 10px">
   <h4>Results</h4>
-  <p *ngIf="searchResponseViewModel.results?.length === 0">No results to display</p>
-  <div class="search-response" *ngFor="let result of searchResponseViewModel.results">
-    <h4>{{ result.name }}</h4> <em>{{ result.description }}</em><br />
-    <em><strong>Activity Id</strong>: {{ result.activity_id }}</em><br />
-    <em><strong>Emission Factor</strong>: {{ result.name }} ({{ result.id }})</em><br />
-    <em><strong>Source LCA Activity</strong>: {{ result.source_lca_activity }}</em><br />
-    <em><strong>Unit Type</strong>: {{ result.unit_type }}</em>
-  </div>
+  <p *ngIf="searchResponseViewModel.results?.length === 0">
+    No results to display
+  </p>
+  <div
+    class="search-response accordion"
+    *ngFor="let result of searchResponseViewModel.results"
+  >
+    <div class="card">
+      <div class="card-header">
+        <!--<button style="float:right" class="btn btn-success" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Get Estimate</button>-->
+        <h4>{{ result.name }}</h4>
+        <em>{{ result.description }}</em
+        ><br />
+        <em><strong>Activity Id</strong>: {{ result.activity_id }}</em
+        ><br />
+        <em
+          ><strong>Emission Factor</strong>: {{ result.name }} ({{
+            result.id
+          }})</em
+        ><br />
+        <em
+          ><strong>Source LCA Activity</strong>:
+          {{ result.source_lca_activity }}</em
+        ><br />
+        <em><strong>Unit Type</strong>: {{ result.unit_type }}</em>
+      </div>
 
+      <div class="card-body">
+        <h5>Estimate</h5>
+        <div class="row">
+          <div class="col">
+
+            <div class="input-group mb-3" style="width:fit-content">
+              <input
+              type="number"
+              class="form-control"
+              placeholder="Enter Value"
+              [(ngModel)]="result.value"
+            />
+              <div class="input-group-append">
+                <button class="btn btn-success">Get Estimate</button>
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
