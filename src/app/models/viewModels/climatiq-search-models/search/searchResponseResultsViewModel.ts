@@ -16,7 +16,7 @@ export class SearchResponseResultsViewModel {
   region: string;
   region_name: string;
   description: string;
-  unit_type: Array<any>;
+  unit_type: string;
   unit: string;
   source_lca_activity: string;
   supported_calculation_methods: string[];
