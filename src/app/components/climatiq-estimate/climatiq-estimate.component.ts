@@ -47,6 +47,8 @@ export class ClimatiqEstimateComponent implements OnInit {
   public selectedCategory: Category;
   public selectedYear: string;
 
+  public isLoadedFromSavedSearch: boolean = false;
+  public showSaveSearchButton: boolean = false;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -158,7 +160,7 @@ export class ClimatiqEstimateComponent implements OnInit {
       (sector) => sector.name === search.sector
     )!;
     this.selectedYear = search.year;
-    this.onSubmit();
+    this.onSubmit(false);
   }
 
   /**
@@ -200,22 +202,33 @@ export class ClimatiqEstimateComponent implements OnInit {
     this.loadForm();
   }
 
-  onSubmit() {
+  onSaveSearch() {
+    let searchRequestViewModel = this.getCurrentSearchRequest();
+    this.climatiqRequestService.saveSearchToCache(searchRequestViewModel);
+    this.loadSavedSearches();
+    this.showSaveSearchButton = false;
+  }
+
+  onSubmit(showSaveSearchButton: boolean = true) {
     this.searchError = '';
-    let searchRequestViewModel = new SearchRequestViewModel(
+    let searchRequestViewModel = this.getCurrentSearchRequest();
+    this.climatiqRequestService
+      .searchAvailableEmissionFactors(searchRequestViewModel)
+      .subscribe((response: SearchResponseViewModel) => {
+        this.searchResponseViewModel = response;
+        this.showSaveSearchButton = showSaveSearchButton;
+      }),
+      (error: any) => {
+        this.searchError = error;
+      };
+  }
+
+  getCurrentSearchRequest() {
+    return new SearchRequestViewModel(
       this.selectedRegion.code,
       this.selectedYear,
       this.selectedSector.name,
       this.selectedCategory.name
     );
-    this.climatiqRequestService
-      .searchAvailableEmissionFactors(searchRequestViewModel)
-      .subscribe((response: SearchResponseViewModel) => {
-        this.searchResponseViewModel = response;
-        this.loadSavedSearches();
-      }),
-      (error: any) => {
-        this.searchError = error;
-      };
   }
 }

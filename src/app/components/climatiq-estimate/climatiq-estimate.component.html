@@ -102,7 +102,7 @@
         [disabled]="!searchRequestValid()"
         (click)="onSubmit()"
       >
-        Search
+        Search Emission factors
       </button>
       &nbsp;
       <button
@@ -111,14 +111,21 @@
       >
         Clear
       </button>
+
+      &nbsp;
+      <button *ngIf="showSaveSearchButton"
+        class="btn btn-info"
+        (click)="onSaveSearch()"
+      >
+        Save Search
+      </button>
     </div>
   </div>
 
 
-<div *ngIf="searchResponseViewModel">
-
+<div *ngIf="searchResponseViewModel" style="margin-top: 10px;">
   <h4>Results</h4>
-  {{ this.searchError }}
+  <p *ngIf="searchResponseViewModel.results?.length === 0">No results to display</p>
   <div class="search-response" *ngFor="let result of searchResponseViewModel.results">
     <h4>{{ result.name }}</h4> <em>{{ result.description }}</em><br />
     <em><strong>Activity Id</strong>: {{ result.activity_id }}</em><br />

@@ -17,12 +17,10 @@ export class ClimatiqRequestService {
     this.requestEndString = '&data_version=5.5&results_per_page=100';
   }
 
-  /// save this in a cache or make
+
   searchAvailableEmissionFactors(
     searchRequest: SearchRequestViewModel
   ): Observable<SearchResponseViewModel> {
-
-    this.saveSearchToCache(searchRequest);
 
     const cachedData = localStorage.getItem(searchRequest.id);
 
@@ -44,7 +42,7 @@ export class ClimatiqRequestService {
     }
   }
 
-  private saveSearchToCache(searchRequest: SearchRequestViewModel) {
+  public saveSearchToCache(searchRequest: SearchRequestViewModel) {
     var localStorageValue = localStorage.getItem('savedSearches');
     if (localStorageValue === null) {
       localStorage.setItem('savedSearches', JSON.stringify([searchRequest]));
