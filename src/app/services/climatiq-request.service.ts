@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SearchRequestViewModel } from '../models/viewModels/climatiq-search-models/searchRequestViewModel';
+import { SearchRequestViewModel } from '../models/viewModels/climatiq-search-models/search/searchRequestViewModel';
 import { Observable, tap } from 'rxjs';
-import { SearchResponseViewModel } from '../models/viewModels/climatiq-search-models/searchResponseViewModel';
 import { SearchRequestUtils } from '../utils/searchRequestUtils';
+import { SearchResponseViewModel } from '../models/viewModels/climatiq-search-models/search/searchResponseViewModel';
 
 @Injectable({
   providedIn: 'root',

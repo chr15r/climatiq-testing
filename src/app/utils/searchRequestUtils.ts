@@ -1,4 +1,4 @@
-import { SearchRequestViewModel } from "../models/viewModels/climatiq-search-models/searchRequestViewModel";
+import { SearchRequestViewModel } from "../models/viewModels/climatiq-search-models/search/searchRequestViewModel";
 
 export class SearchRequestUtils {
 

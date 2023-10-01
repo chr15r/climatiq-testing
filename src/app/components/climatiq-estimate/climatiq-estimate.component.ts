@@ -1,15 +1,19 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { NgSelectComponent } from '@ng-select/ng-select';
-import { SearchRequestViewModel } from 'src/app/models/viewModels/climatiq-search-models/searchRequestViewModel';
+import { SearchRequestViewModel } from 'src/app/models/viewModels/climatiq-search-models/search/searchRequestViewModel';
 import { Category } from 'src/app/models/viewModels/category';
 import { Region } from 'src/app/models/viewModels/region';
 import { Sector } from 'src/app/models/viewModels/sector';
 import * as regionData from '../../models/json-data/regions.json';
 import * as sectorData from '../../models/json-data/sectors.json';
 import * as categoryData from '../../models/json-data/categories.json';
+import * as unitTypeData from '../../models/json-data/unit-types.json';
 import { ClimatiqRequestService } from 'src/app/services/climatiq-request.service';
-import { SearchResponseViewModel } from 'src/app/models/viewModels/climatiq-search-models/searchResponseViewModel';
+import { SearchResponseViewModel } from 'src/app/models/viewModels/climatiq-search-models/search/searchResponseViewModel';
+import { SearchResponseResultsViewModel } from 'src/app/models/viewModels/climatiq-search-models/search/searchResponseResultsViewModel';
+import { UnitType } from 'src/app/models/viewModels/unit-type';
+
 
 @Component({
   selector: 'app-climatiq-estimate',
@@ -47,6 +51,8 @@ export class ClimatiqEstimateComponent implements OnInit {
   public selectedCategory: Category;
   public selectedYear: string;
 
+  public unitTypes: UnitType[] = [];
+
   public isLoadedFromSavedSearch: boolean = false;
   public showSaveSearchButton: boolean = false;
 
@@ -68,6 +74,7 @@ export class ClimatiqEstimateComponent implements OnInit {
     this.searchResponseViewModel = new SearchResponseViewModel();
     this.loadSavedSearches();
     this.loadDropdownData();
+    this.loadUnitTypes();
     this.changeDetector.detectChanges();
   }
 
@@ -78,6 +85,17 @@ export class ClimatiqEstimateComponent implements OnInit {
     this.loadRegionDropdown();
     this.loadSectorDropdown();
     this.loadCategoryDropdown();
+  }
+
+  loadUnitTypes() {
+    this.unitTypes = [];
+    const unitTypeDataString: string = JSON.stringify(unitTypeData);
+    const unitTypeDropdownData = JSON.parse(unitTypeDataString) as UnitType[];
+    Array.from(unitTypeDropdownData).forEach((element) => {
+      let unitType: UnitType = new UnitType(element.unit_type, element.units);
+      this.unitTypes.push(unitType);
+    });
+
   }
 
   loadRegionDropdown() {
@@ -186,7 +204,7 @@ export class ClimatiqEstimateComponent implements OnInit {
 
   /**
    *
-   * Form submission & validation
+   * Search Form submission & validation
    */
 
   searchRequestValid(): boolean {
@@ -231,4 +249,5 @@ export class ClimatiqEstimateComponent implements OnInit {
       this.selectedCategory.name
     );
   }
+
 }

@@ -9,11 +9,13 @@ import { ClimatiqEstimateComponent } from './components/climatiq-estimate/climat
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorService } from './services/http-interceptor.service';
 import { ClimatiqRequestService } from './services/climatiq-request.service';
+import { ClimatiqSearchResponseEmissionFactorComponent } from './components/climatiq-estimate/climatiq-search-response-emission-factor/climatiq-search-response-emission-factor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ClimatiqEstimateComponent
+    ClimatiqEstimateComponent,
+    ClimatiqSearchResponseEmissionFactorComponent
   ],
   imports: [
     BrowserModule,

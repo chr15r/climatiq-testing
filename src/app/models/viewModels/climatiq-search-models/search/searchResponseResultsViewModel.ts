@@ -1,4 +1,5 @@
-import { ConstituentGasesViewModel } from "./constituentGasesViewModel";
+import { ConstituentGasesViewModel } from "../constituentGasesViewModel";
+
 
 export class SearchResponseResultsViewModel {
   id: string;

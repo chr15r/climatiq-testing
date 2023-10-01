@@ -129,49 +129,10 @@
   <p *ngIf="searchResponseViewModel.results?.length === 0">
     No results to display
   </p>
+
   <div
     class="search-response accordion"
-    *ngFor="let result of searchResponseViewModel.results"
-  >
-    <div class="card">
-      <div class="card-header">
-        <!--<button style="float:right" class="btn btn-success" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Get Estimate</button>-->
-        <h4>{{ result.name }}</h4>
-        <em>{{ result.description }}</em
-        ><br />
-        <em><strong>Activity Id</strong>: {{ result.activity_id }}</em
-        ><br />
-        <em
-          ><strong>Emission Factor</strong>: {{ result.name }} ({{
-            result.id
-          }})</em
-        ><br />
-        <em
-          ><strong>Source LCA Activity</strong>:
-          {{ result.source_lca_activity }}</em
-        ><br />
-        <em><strong>Unit Type</strong>: {{ result.unit_type }}</em>
-      </div>
-
-      <div class="card-body">
-        <h5>Estimate</h5>
-        <div class="row">
-          <div class="col">
-
-            <div class="input-group mb-3" style="width:fit-content">
-              <input
-              type="number"
-              class="form-control"
-              placeholder="Enter Value"
-              [(ngModel)]="result.value"
-            />
-              <div class="input-group-append">
-                <button class="btn btn-success">Get Estimate</button>
-              </div>
-            </div>
-
-        </div>
-      </div>
-    </div>
+    *ngFor="let result of searchResponseViewModel.results"  >
+    <app-climatiq-search-response-emission-factor [searchResponseResult]="result" [unitTypes]="unitTypes"></app-climatiq-search-response-emission-factor>
   </div>
 </div>
