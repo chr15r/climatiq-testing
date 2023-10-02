@@ -5,6 +5,6 @@ export class EmissionFactorViewModel {
   source_dataset: string;
   region: string;
   region_fallback: true;
-  year: string;
+  year: number;
   source_lca_activity: string;
 }

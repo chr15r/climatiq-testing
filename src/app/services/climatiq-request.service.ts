@@ -4,17 +4,22 @@ import { SearchRequestViewModel } from '../models/viewModels/climatiq-search-mod
 import { Observable, tap } from 'rxjs';
 import { SearchRequestUtils } from '../utils/searchRequestUtils';
 import { SearchResponseViewModel } from '../models/viewModels/climatiq-search-models/search/searchResponseViewModel';
+import { Constants } from '../app.constants';
+import { EmissionFactorEstimateViewModel } from '../models/viewModels/climatiq-search-models/estimate/emissionFactorEstimateViewModel';
+import { EmissionFactorEstimateRequestViewModel } from '../models/viewModels/climatiq-search-models/estimate/emissionFactorEstimateRequestViewModel';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClimatiqRequestService {
   private searchUrl: string;
+  private estimateUrl: string;
   private requestEndString: string;
 
   constructor(private http: HttpClient) {
     this.searchUrl = 'https://beta4.api.climatiq.io/search?';
-    this.requestEndString = '&data_version=5.5&results_per_page=100';
+    this.estimateUrl = 'https://beta4.api.climatiq.io/estimate';
+    this.requestEndString = `&data_version=${Constants.CLIMATIQ_DATA_VERSION}&results_per_page=100`;
   }
 
 
@@ -42,6 +47,10 @@ export class ClimatiqRequestService {
     }
   }
 
+  public getEmissionFactorEstimate(request: EmissionFactorEstimateRequestViewModel): Observable<EmissionFactorEstimateViewModel> {
+    return this.http.post<EmissionFactorEstimateViewModel>(`${this.estimateUrl}`, request);
+  }
+
   public saveSearchToCache(searchRequest: SearchRequestViewModel) {
     var localStorageValue = localStorage.getItem('savedSearches');
     if (localStorageValue === null) {
@@ -64,7 +73,7 @@ export class ClimatiqRequestService {
   }
 
   // Function to clear data from local storage (if needed)
-  clearLocalStorage(key: string): void {
+  private clearLocalStorage(key: string): void {
     localStorage.removeItem(key);
   }
 

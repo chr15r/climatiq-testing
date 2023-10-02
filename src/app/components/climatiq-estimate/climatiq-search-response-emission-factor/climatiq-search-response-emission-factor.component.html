@@ -50,7 +50,6 @@
           </div>
 
           <div class="col">
-
             <input
               style="margin-left: 5px"
               type="number"
@@ -61,9 +60,24 @@
           </div>
 
         </div>
-        <button class="btn btn-success" [disabled]="!estimateDataValid()">
-          Get Estimate
-        </button>
+        <div class="row">
+          <div class="col">
+            <button class="btn btn-success" [disabled]="!estimateDataValid()" (click)="estimateEmissionFactor()">
+              Get Estimate
+            </button>
+            </div>
+
+            <div class="col" *ngIf="estimate">
+              <h3>Co2 Estimate:
+                <span class="estimate">{{ estimate.co2e}} {{ estimate.co2e_unit}}</span>
+              </h3>
+              <strong><em>Calculation Method:</em></strong> {{ estimate.co2e_calculation_method}}<br />
+              <strong><em>Origin:</em></strong> {{ estimate.co2e_calculation_origin}}
+            </div>
+        </div>
+
+
+
       </div>
 
 </div>

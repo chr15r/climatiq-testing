@@ -1,0 +1,5 @@
+export class EmissionFactorEstimateErrorViewModel {
+  error: string;
+  error_code: string;
+  message: string;
+}

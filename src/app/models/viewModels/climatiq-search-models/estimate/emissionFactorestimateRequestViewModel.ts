@@ -1,6 +1,6 @@
-import { EmissionFactorViewModel } from "./emissionFactorViewModel";
+import { EmissionFactorViewModel } from "../emissionFactorViewModel";
 
-export class EstimateRequestViewModel {
+export class EmissionFactorEstimateRequestViewModel {
   emission_factor : EmissionFactorViewModel;
   parameters: object;
 }
