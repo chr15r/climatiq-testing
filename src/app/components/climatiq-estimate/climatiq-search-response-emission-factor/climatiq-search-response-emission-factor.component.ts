@@ -21,10 +21,10 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
   @Input() unitTypes: UnitType[];
 
   public availableUnits: Unit[] = [];
-
   public additionalParameter: EmissionFactorEstimateAdditionalParameterViewModel;
   public unitValues: EmissionFactorEstimateUnitValueViewModel[] = [];
   public estimate: EmissionFactorEstimateViewModel;
+  public loading: boolean = false;
 
   constructor(private readonly climatiqRequestService: ClimatiqRequestService) {
 
@@ -70,12 +70,14 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
   }
 
   estimateEmissionFactor() {
+    this.loading = true;
     let estimate: EmissionFactorEstimateRequestViewModel = new EmissionFactorEstimateRequestViewModel();
     estimate.emission_factor = this.buildEmissionFactorData();
     estimate.parameters = this.buildParameterData();
 
     this.climatiqRequestService.getEmissionFactorEstimate(estimate).subscribe((response) => {
       this.estimate = response;
+      this.loading = false;
     })
 
   }
