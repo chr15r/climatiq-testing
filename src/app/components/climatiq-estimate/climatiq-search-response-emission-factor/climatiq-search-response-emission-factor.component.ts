@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { EmissionFactorEstimateAdditionalParameterViewModel } from 'src/app/models/viewModels/climatiq-search-models/estimate/emissionFactorEstimateAdditionalParameterViewModel';
 import { EmissionFactorEstimateUnitValueViewModel } from 'src/app/models/viewModels/climatiq-search-models/estimate/emissionFactorEstimateUnitValueViewModel';
 import { SearchResponseResultsViewModel } from 'src/app/models/viewModels/climatiq-search-models/search/searchResponseResultsViewModel';
 import { Unit } from 'src/app/models/viewModels/unit';
@@ -15,6 +16,8 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
   @Input() unitTypes: UnitType[];
 
   public availableUnits: Unit[] = [];
+
+  public additionalParameter: EmissionFactorEstimateAdditionalParameterViewModel;
   public unitValues: EmissionFactorEstimateUnitValueViewModel[] = [];
 
   ngOnInit(): void {
@@ -26,9 +29,18 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
     let unitType: UnitType = this.unitTypes.find(u => u.unit_type === this.searchResponseResult.unit_type)!;
     this.availableUnits = unitType.units;
 
+    if(unitType.additional_parameter_name !== undefined) {
+      this.additionalParameter = new EmissionFactorEstimateAdditionalParameterViewModel(unitType.additional_parameter_name);
+    }
+
     this.availableUnits.forEach(u => {
-      this.unitValues.push(new EmissionFactorEstimateUnitValueViewModel(u.name, u.values));
+      this.unitValues.push(new EmissionFactorEstimateUnitValueViewModel(u.name, u.value_parameter_name, u.values));
     });
+  }
+
+  estimateDataValid() {
+    return this.unitValuesValid() && (this.additionalParameter === undefined  ||
+          (this.additionalParameter !== undefined && this.additionalParameter.value !== undefined));
   }
 
   unitValuesValid(): boolean {
@@ -42,5 +54,9 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
 
   unitValueIsValid(u: EmissionFactorEstimateUnitValueViewModel): boolean {
     return u.selectedUnit?.length > 0 && u.inputValue?.toString().length > 0;
+  }
+
+  getFormattedString(s: string) {
+    return s.replace("_"," ");
   }
 }

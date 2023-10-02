@@ -19,21 +19,40 @@
 
   <div class="card-body">
     <h5>Estimate</h5>
-    <div class="row">
+
+    <div class="row" *ngIf="additionalParameter !== undefined">
       <div class="col">
-        <div *ngFor="let unitValue of unitValues">
-          <div class="input-group mb-3" style="width: fit-content">
+        <em><strong>{{ getFormattedString(additionalParameter.name) }}:</strong></em>
+        <div class="input-group " style="width: fit-content">
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Enter Value"
+            [(ngModel)]="additionalParameter.value"
+          />
+          </div>
+        </div>
+
+    </div>
+
+
+        <div class="row mb-3" *ngFor="let unitValue of unitValues">
+          <div class="input-group"><em><strong>{{ getFormattedString(unitValue.name) }}:</strong></em></div>
+          <div class="col">
             <ng-select
-              [items]="unitValue.dropdownUnits"
-              placeholder="Select Unit"
-              appendTo="body"
-              [closeOnSelect]="true"
-              [(ngModel)]="unitValue.selectedUnit"
-            >
-            </ng-select>
+            [items]="unitValue.dropdownUnits"
+            placeholder="Select Unit"
+            appendTo="body"
+            [closeOnSelect]="true"
+            [(ngModel)]="unitValue.selectedUnit"
+          >
+          </ng-select>
+          </div>
+
+          <div class="col">
 
             <input
-              style="margin-left: 5px;"
+              style="margin-left: 5px"
               type="number"
               class="form-control"
               placeholder="Enter Value"
@@ -41,15 +60,10 @@
             />
           </div>
 
-          {{ unitValue.inputValue }}
-
-          {{ unitValue.selectedUnit }}
-
-          <div class="input-group-append">
-            <button class="btn btn-success" [disabled]="!unitValuesValid()">Get Estimate</button>
-          </div>
         </div>
+        <button class="btn btn-success" [disabled]="!estimateDataValid()">
+          Get Estimate
+        </button>
       </div>
-    </div>
-  </div>
+
 </div>

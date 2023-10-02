@@ -92,7 +92,7 @@ export class ClimatiqEstimateComponent implements OnInit {
     const unitTypeDataString: string = JSON.stringify(unitTypeData);
     const unitTypeDropdownData = JSON.parse(unitTypeDataString) as UnitType[];
     Array.from(unitTypeDropdownData).forEach((element) => {
-      let unitType: UnitType = new UnitType(element.unit_type, element.units);
+      let unitType: UnitType = new UnitType(element.unit_type, element.additional_parameter_name, element.units);
       this.unitTypes.push(unitType);
     });
 

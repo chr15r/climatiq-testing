@@ -4,6 +4,7 @@
     "units": [
       {
         "name": "area_unit",
+        "value_parameter_name": "area",
         "values": ["m2", "km2", "ft2", "ha"]
       }
     ]
@@ -13,19 +14,23 @@
     "units": [
       {
         "name": "area_unit",
+        "value_parameter_name": "area",
         "values": ["m2", "km2", "ft2", "ha"]
       },
       {
-        "time_unit": "time_unit",
+        "name": "time_unit",
+        "value_parameter_name": "time",
         "values": ["ms", "s", "m", "h", "day", "year"]
       }
     ]
   },
   {
     "unit_type": "ContainerOverDistance",
+    "additional_parameter_name": "twenty_foot_equivalent",
     "units": [
       {
         "name": "distance_unit",
+        "value_parameter_name": "distance",
         "values":["m", "km", "ft", "mi", "nmi"]
       }
     ]
@@ -35,6 +40,7 @@
     "units": [
       {
         "name": "data_unit",
+        "value_parameter_name": "data",
         "values": ["MB", "GB", "TB"]
       }
     ]
@@ -44,10 +50,12 @@
     "units": [
       {
         "name": "data_unit",
+        "value_parameter_name": "data",
         "values": ["MB", "GB", "TB"]
       },
       {
         "name": "time_unit",
+        "value_parameter_name": "time",
         "values": ["ms", "s", "m", "h", "day", "year"]
       }
     ]
@@ -57,6 +65,7 @@
     "units": [
       {
         "name": "distance_unit",
+        "value_parameter_name": "distance",
         "values":["m", "km", "ft", "mi", "nmi"]
       }
     ]
@@ -66,10 +75,12 @@
     "units": [
       {
         "name": "distance_unit",
+        "value_parameter_name": "distance",
         "values": ["m", "km", "ft", "mi", "nmi"]
       },
       {
         "name": "time_unit",
+        "value_parameter_name": "time",
         "values": ["ms", "s", "m", "h", "day", "year"]
       }
     ]
@@ -79,6 +90,7 @@
     "units": [
       {
         "name": "energy_unit",
+        "value_parameter_name": "energy",
         "values":[
           "Wh",
           "kWh",
@@ -98,6 +110,7 @@
     "units": [
       {
         "name": "money_unit",
+        "value_parameter_name": "money",
         "values":[
           "usd",
           "afn",
@@ -144,22 +157,27 @@
   },
   {
     "unit_type": "Number",
+    "value_parameter_name": "number",
     "units": []
   },
   {
     "unit_type": "NumberOverTime",
+    "additional_parameter_name": "number",
     "units": [
       {
         "name": "time_unit",
+        "value_parameter_name": "time",
         "values": ["ms", "s", "m", "h", "day", "year"]
       }
     ]
   },
   {
     "unit_type": "PassengerOverDistance",
+    "additional_parameter_name": "passengers",
     "units": [
       {
         "name": "distance_unit",
+        "value_parameter_name": "distance",
         "values":["m", "km", "ft", "mi", "nmi"]
       }
     ]
@@ -169,6 +187,7 @@
     "units": [
       {
         "name": "time_unit",
+        "value_parameter_name": "time",
         "values": ["ms", "s", "m", "h", "day", "year"]
       }
     ]
@@ -178,6 +197,7 @@
     "units": [
       {
         "name": "volume_unit",
+        "value_parameter_name": "volume",
         "values": [
           "ml",
           "l",
@@ -194,6 +214,7 @@
     "units": [
       {
         "name": "weight_unit",
+        "value_parameter_name": "weight",
         "values": ["g", "kg", "t", "ton", "lb"]
       }
     ]
@@ -203,10 +224,12 @@
     "units": [
       {
         "name": "distance_unit",
+        "value_parameter_name": "distance",
         "values": ["m", "km", "ft", "mi", "nmi"]
       },
       {
         "name": "weight_unit",
+        "value_parameter_name": "weight",
         "values": ["g", "kg", "t", "ton", "lb"]
       }
     ]
@@ -216,10 +239,12 @@
     "units": [
       {
         "name": "time_unit",
+        "value_parameter_name": "time",
         "values": ["ms", "s", "m", "h", "day", "year"]
       },
       {
         "name": "weight_unit",
+        "value_parameter_name": "weight",
         "values": ["g", "kg", "t", "ton", "lb"]
       }
     ]
