@@ -13,7 +13,7 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
   @Input() unitTypes: UnitType[];
 
 
-  public availableUnits: any[] = [];
+  public availableUnits: { key: string, value: string[] }[] = [];
 
   ngOnInit(): void {
     this.loadAvailableUnits();
@@ -23,9 +23,6 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
   loadAvailableUnits() {
     let unitType: UnitType = this.unitTypes.find(u => u.unit_type === this.searchResponseResult.unit_type)!;
 
-    if (unitType) {
-      this.availableUnits = unitType.units;
-    }
 
   }
 
