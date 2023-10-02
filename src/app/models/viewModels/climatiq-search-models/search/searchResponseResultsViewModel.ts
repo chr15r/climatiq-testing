@@ -24,5 +24,4 @@ export class SearchResponseResultsViewModel {
   factor_calculation_method: string;
   factor_calculation_origin: string;
   constituent_gases: ConstituentGasesViewModel[];
-  value: number;
 }

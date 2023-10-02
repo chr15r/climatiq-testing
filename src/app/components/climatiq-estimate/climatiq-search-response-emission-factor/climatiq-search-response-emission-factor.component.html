@@ -21,29 +21,32 @@
     <h5>Estimate</h5>
     <div class="row">
       <div class="col">
-        <div class="input-group mb-3" style="width: fit-content">
-          <ng-select
-          #categoryDropdown
-          [items]="availableUnits"
-          bindLabel="name"
-          placeholder="Select Category"
-          appendTo="body"
-          [closeOnSelect]="true"
-        >
-        </ng-select>
-
-          <input
-            type="number"
-            class="form-control"
-            placeholder="Enter Value"
-            [(ngModel)]="searchResponseResult.value"
-          />
-          <div class="input-group-append">
-            <button
-              class="btn btn-success"
+        <div *ngFor="let unitValue of unitValues">
+          <div class="input-group mb-3" style="width: fit-content">
+            <ng-select
+              [items]="unitValue.dropdownUnits"
+              placeholder="Select Unit"
+              appendTo="body"
+              [closeOnSelect]="true"
+              [(ngModel)]="unitValue.selectedUnit"
             >
-              Get Estimate
-            </button>
+            </ng-select>
+
+            <input
+              style="margin-left: 5px;"
+              type="number"
+              class="form-control"
+              placeholder="Enter Value"
+              [(ngModel)]="unitValue.inputValue"
+            />
+          </div>
+
+          {{ unitValue.inputValue }}
+
+          {{ unitValue.selectedUnit }}
+
+          <div class="input-group-append">
+            <button class="btn btn-success" [disabled]="!unitValuesValid()">Get Estimate</button>
           </div>
         </div>
       </div>

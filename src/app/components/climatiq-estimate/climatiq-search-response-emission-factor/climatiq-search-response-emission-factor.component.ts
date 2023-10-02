@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { EmissionFactorEstimateUnitValueViewModel } from 'src/app/models/viewModels/climatiq-search-models/estimate/emissionFactorEstimateUnitValueViewModel';
 import { SearchResponseResultsViewModel } from 'src/app/models/viewModels/climatiq-search-models/search/searchResponseResultsViewModel';
+import { Unit } from 'src/app/models/viewModels/unit';
 import { UnitType } from 'src/app/models/viewModels/unit-type';
 
 @Component({
@@ -12,8 +14,8 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
   @Input() searchResponseResult: SearchResponseResultsViewModel;
   @Input() unitTypes: UnitType[];
 
-
-  public availableUnits: { key: string, value: string[] }[] = [];
+  public availableUnits: Unit[] = [];
+  public unitValues: EmissionFactorEstimateUnitValueViewModel[] = [];
 
   ngOnInit(): void {
     this.loadAvailableUnits();
@@ -22,10 +24,23 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
 
   loadAvailableUnits() {
     let unitType: UnitType = this.unitTypes.find(u => u.unit_type === this.searchResponseResult.unit_type)!;
+    this.availableUnits = unitType.units;
 
-
+    this.availableUnits.forEach(u => {
+      this.unitValues.push(new EmissionFactorEstimateUnitValueViewModel(u.name, u.values));
+    });
   }
 
+  unitValuesValid(): boolean {
+    let invalidUnits: number = 0;
+    this.unitValues.forEach(u => {
+      if(!this.unitValueIsValid(u))
+        invalidUnits += 1;
+    })
+    return invalidUnits > 0 ? false : true;
+  }
 
-
+  unitValueIsValid(u: EmissionFactorEstimateUnitValueViewModel): boolean {
+    return u.selectedUnit?.length > 0 && u.inputValue?.toString().length > 0;
+  }
 }
