@@ -8,4 +8,9 @@ export class EmissionFactorEstimateViewModel {
   co2e_calculation_origin: string;
   emission_factor: EmissionFactorViewModel;
   constituent_gases: ConstituentGasesViewModel;
+
+  error: string;
+  error_code: string;
+  message: string;
+
 }

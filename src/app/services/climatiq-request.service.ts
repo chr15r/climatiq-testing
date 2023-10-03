@@ -1,12 +1,13 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SearchRequestViewModel } from '../models/viewModels/climatiq-search-models/search/searchRequestViewModel';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subject, catchError, of, tap, throwError } from 'rxjs';
 import { SearchRequestUtils } from '../utils/searchRequestUtils';
 import { SearchResponseViewModel } from '../models/viewModels/climatiq-search-models/search/searchResponseViewModel';
 import { Constants } from '../app.constants';
 import { EmissionFactorEstimateViewModel } from '../models/viewModels/climatiq-search-models/estimate/emissionFactorEstimateViewModel';
 import { EmissionFactorEstimateRequestViewModel } from '../models/viewModels/climatiq-search-models/estimate/emissionFactorEstimateRequestViewModel';
+import { ErrorViewModel } from '../models/viewModels/climatiq-search-models/errorViewModel';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,8 @@ export class ClimatiqRequestService {
   private searchUrl: string;
   private estimateUrl: string;
   private requestEndString: string;
+  private errorReturned = new Subject<ErrorViewModel>();
+  errorReturned$ = this.errorReturned.asObservable();
 
   constructor(private http: HttpClient) {
     this.searchUrl = 'https://beta4.api.climatiq.io/search?';
@@ -48,7 +51,18 @@ export class ClimatiqRequestService {
   }
 
   public getEmissionFactorEstimate(request: EmissionFactorEstimateRequestViewModel): Observable<EmissionFactorEstimateViewModel> {
-    return this.http.post<EmissionFactorEstimateViewModel>(`${this.estimateUrl}`, request);
+    return this.http.post<EmissionFactorEstimateViewModel>(`${this.estimateUrl}`, request)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+  handleError(httpResponseError: HttpErrorResponse): Observable<EmissionFactorEstimateViewModel> {
+    console.log(httpResponseError);
+    let errorVM: EmissionFactorEstimateViewModel = new EmissionFactorEstimateViewModel();
+    errorVM.error = httpResponseError.error.error;
+    errorVM.error_code = httpResponseError.error.status_code;
+    errorVM.message = httpResponseError.error.message;
+    return of(errorVM);
   }
 
   public saveSearchToCache(searchRequest: SearchRequestViewModel) {
