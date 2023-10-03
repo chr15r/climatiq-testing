@@ -169,6 +169,7 @@ export class ClimatiqEstimateComponent implements OnInit {
   }
 
   populateSavedSearch(search: SearchRequestViewModel) {
+    this.clearCategoryDropdown();
     this.selectedCategory = this.categoryDropdownData.find(
       (category) => category.name === search.category
     )!;
