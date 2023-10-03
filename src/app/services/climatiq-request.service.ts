@@ -96,8 +96,4 @@ export class ClimatiqRequestService {
     localStorage.setItem(key, JSON.stringify(data));
   }
 
-  // Function to clear data from local storage (if needed)
-  private clearLocalStorage(key: string): void {
-    localStorage.removeItem(key);
-  }
 }

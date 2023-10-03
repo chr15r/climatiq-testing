@@ -163,8 +163,8 @@ export class ClimatiqEstimateComponent implements OnInit {
         'savedSearches',
         JSON.stringify(savedSearchRequests)
       );
-      this.loadSavedSearches();
     }
+    this.loadSavedSearches();
   }
 
   populateSavedSearch(search: SearchRequestViewModel) {
@@ -180,6 +180,13 @@ export class ClimatiqEstimateComponent implements OnInit {
     )!;
     this.selectedYear = search.year;
     this.onSubmit(false);
+  }
+
+  clearSavedSearches() {
+    this.savedSearches.forEach((search) => {
+      this.deleteSavedSearch(search);
+    });
+    this.loadSavedSearches();
   }
 
   /**
