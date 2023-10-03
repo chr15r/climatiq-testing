@@ -128,26 +128,26 @@
   <app-loader [text]="'Calculating...'"></app-loader>
 </ng-container>
 
-<ng-container *ngIf="!loading && searchResponseViewModel">
+<ng-container *ngIf="!loading && searchResponse">
 
   <div style="margin-top: 10px">
 
-    <ng-container *ngIf="error !== undefined">
+    <ng-container *ngIf="searchResponse.error !== undefined">
       <span class="error">
         <strong>Error: </strong>
-        {{ error.message }}
+        {{ searchResponse.error_message }}
       </span>
     </ng-container>
 
-    <ng-container *ngIf="error === undefined">
+    <ng-container *ngIf="searchResponse.error === undefined">
       <h4>Results</h4>
-      <p *ngIf="searchResponseViewModel.results?.length === 0">
+      <p *ngIf="searchResponse.results?.length === 0">
         No results to display
       </p>
 
       <div
         class="search-response accordion"
-        *ngFor="let result of searchResponseViewModel.results"  >
+        *ngFor="let result of searchResponse.results"  >
         <app-climatiq-search-response-emission-factor [searchResponseResult]="result" [unitTypes]="unitTypes"></app-climatiq-search-response-emission-factor>
       </div>
 

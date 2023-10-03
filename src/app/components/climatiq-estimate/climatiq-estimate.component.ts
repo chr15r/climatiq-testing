@@ -12,7 +12,6 @@ import * as unitTypeData from '../../models/json-data/unit-types.json';
 import { ClimatiqRequestService } from 'src/app/services/climatiq-request.service';
 import { SearchResponseViewModel } from 'src/app/models/viewModels/climatiq-search-models/search/searchResponseViewModel';
 import { UnitType } from 'src/app/models/viewModels/unit-type';
-import { ErrorViewModel } from 'src/app/models/viewModels/climatiq-search-models/errorViewModel';
 
 @Component({
   selector: 'app-climatiq-estimate',
@@ -27,8 +26,8 @@ export class ClimatiqEstimateComponent implements OnInit {
   @ViewChild('yearDropDown') yearDropDown: NgSelectComponent;
   @ViewChild('sectorDropdown') sectorDropdown: NgSelectComponent;
 
-  public searchResponseViewModel: SearchResponseViewModel = new SearchResponseViewModel();
-  public error: ErrorViewModel;
+  public searchResponse: SearchResponseViewModel =
+    new SearchResponseViewModel();
   public savedSearches: SearchRequestViewModel[] = [];
   public regionDropdownData: Region[] = [];
   public sectorDropdownData: Sector[] = [];
@@ -69,7 +68,7 @@ export class ClimatiqEstimateComponent implements OnInit {
     this.selectedSector = new Sector('');
     this.selectedCategory = new Category('', '');
     this.selectedYear = '';
-    this.searchResponseViewModel = new SearchResponseViewModel();
+    this.searchResponse = new SearchResponseViewModel();
     this.loadSavedSearches();
     this.loadDropdownData();
     this.loadUnitTypes();
@@ -233,14 +232,9 @@ export class ClimatiqEstimateComponent implements OnInit {
     this.loading = true;
     let searchRequestViewModel = this.getCurrentSearchRequest();
     this.climatiqRequestService
-      .searchAvailableEmissionFactors(searchRequestViewModel)
-      .subscribe(response => {
-        if(response.error !== undefined) {
-          this.error = response;
-        }
-        else {
-          this.searchResponseViewModel = response;
-        }
+      .searchAvailableEmissionFactors<SearchResponseViewModel>(searchRequestViewModel)
+      .subscribe((response) => {
+        this.searchResponse = response;
         this.showSaveSearchButton = showSaveSearchButton;
         this.loading = false;
       });

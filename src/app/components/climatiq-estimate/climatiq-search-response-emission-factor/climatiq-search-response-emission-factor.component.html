@@ -82,16 +82,16 @@
           <app-loader [text]="'Calculating...'"></app-loader>
         </ng-container>
 
-        <ng-container *ngIf="!loading">
+        <ng-container *ngIf="!loading && estimate">
 
-          <ng-container *ngIf="error !== undefined">
+          <ng-container *ngIf="estimate.error !== undefined">
               <span class="error">
                 <strong>Error: </strong>
-                {{ error.message }}
+                {{ estimate.error_message }}
               </span>
           </ng-container>
 
-          <ng-container *ngIf="estimate !== undefined && error === undefined">
+          <ng-container *ngIf="estimate.error === undefined">
             <h3>
               Co2 Estimate:
               <span class="estimate"

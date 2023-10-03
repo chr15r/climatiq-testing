@@ -9,7 +9,6 @@ import { SearchResponseResultsViewModel } from 'src/app/models/viewModels/climat
 import { Unit } from 'src/app/models/viewModels/unit';
 import { UnitType } from 'src/app/models/viewModels/unit-type';
 import { ClimatiqRequestService } from 'src/app/services/climatiq-request.service';
-import { ErrorViewModel } from 'src/app/models/viewModels/climatiq-search-models/errorViewModel';
 
 @Component({
   selector: 'app-climatiq-search-response-emission-factor',
@@ -25,7 +24,6 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
   public additionalParameter: EmissionFactorEstimateAdditionalParameterViewModel;
   public unitValues: EmissionFactorEstimateUnitValueViewModel[] = [];
   public estimate: EmissionFactorEstimateViewModel;
-  public error: ErrorViewModel;
   public loading: boolean = false;
 
   constructor(private readonly climatiqRequestService: ClimatiqRequestService) {
@@ -77,13 +75,8 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
     estimate.emission_factor = this.buildEmissionFactorData();
     estimate.parameters = this.buildParameterData();
 
-    this.climatiqRequestService.getEmissionFactorEstimate(estimate).subscribe((response) => {
-      if(response.error !== undefined) {
-        this.error = response;
-      }
-      else {
-        this.estimate = response;
-      }
+    this.climatiqRequestService.getEmissionFactorEstimate<EmissionFactorEstimateViewModel>(estimate).subscribe((response) => {
+      this.estimate = response;
       this.loading = false;
     })
 
