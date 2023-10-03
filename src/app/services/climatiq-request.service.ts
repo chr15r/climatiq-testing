@@ -46,9 +46,9 @@ export class ClimatiqRequestService {
           tap((response) => {
             // Update the local storage with the new data
             this.saveResponseToCache(searchRequest.id, response);
-          })
+          }),
+          (catchError(this.handleError<T>))
         )
-        .pipe(catchError(this.handleError<T>));
     }
   }
 
