@@ -124,15 +124,40 @@
   </div>
 </div>
 
-<div *ngIf="searchResponseViewModel" style="margin-top: 10px">
-  <h4>Results</h4>
-  <p *ngIf="searchResponseViewModel.results?.length === 0">
-    No results to display
-  </p>
+<ng-container *ngIf="loading">
+  <app-loader [text]="'Calculating...'"></app-loader>
+</ng-container>
 
-  <div
-    class="search-response accordion"
-    *ngFor="let result of searchResponseViewModel.results"  >
-    <app-climatiq-search-response-emission-factor [searchResponseResult]="result" [unitTypes]="unitTypes"></app-climatiq-search-response-emission-factor>
+<ng-container *ngIf="!loading && searchResponseViewModel">
+
+  <div style="margin-top: 10px">
+
+    <ng-container *ngIf="searchResponseViewModel.error !== undefined">
+      <span class="error">
+        <strong>Error: </strong>
+        {{ searchResponseViewModel.message }}
+      </span>
+    </ng-container>
+
+    <ng-container *ngIf="searchResponseViewModel.error === undefined">
+      <h4>Results</h4>
+      <p *ngIf="searchResponseViewModel.results?.length === 0">
+        No results to display
+      </p>
+
+      <div
+        class="search-response accordion"
+        *ngFor="let result of searchResponseViewModel.results"  >
+        <app-climatiq-search-response-emission-factor [searchResponseResult]="result" [unitTypes]="unitTypes"></app-climatiq-search-response-emission-factor>
+      </div>
+
+
+    </ng-container>
+
+
   </div>
-</div>
+
+
+</ng-container>
+
+

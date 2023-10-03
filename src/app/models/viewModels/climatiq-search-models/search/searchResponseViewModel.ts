@@ -7,4 +7,8 @@ export class SearchResponseViewModel {
   total_results: number;
   results: SearchResponseResultsViewModel[];
   possible_filters: SearchResponsePossibleFiltersViewModel[];
+
+  error: string;
+  error_code: string;
+  message: string;
 }

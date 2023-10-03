@@ -46,17 +46,28 @@ export class ClimatiqRequestService {
             // Update the local storage with the new data
             this.saveResponseToCache(searchRequest.id, response);
           })
-        );
+        )
+        .pipe(
+          catchError(this.handleSearchError)
+        );;
     }
+  }
+  handleSearchError(httpResponseError: HttpErrorResponse): Observable<SearchResponseViewModel> {
+    console.log(httpResponseError);
+    let errorVM: SearchResponseViewModel = new SearchResponseViewModel();
+    errorVM.error = httpResponseError.error.error;
+    errorVM.error_code = httpResponseError.error.status_code;
+    errorVM.message = httpResponseError.error.message;
+    return of(errorVM);
   }
 
   public getEmissionFactorEstimate(request: EmissionFactorEstimateRequestViewModel): Observable<EmissionFactorEstimateViewModel> {
     return this.http.post<EmissionFactorEstimateViewModel>(`${this.estimateUrl}`, request)
     .pipe(
-      catchError(this.handleError)
+      catchError(this.handleEstimateError)
     );
   }
-  handleError(httpResponseError: HttpErrorResponse): Observable<EmissionFactorEstimateViewModel> {
+  handleEstimateError(httpResponseError: HttpErrorResponse): Observable<EmissionFactorEstimateViewModel> {
     console.log(httpResponseError);
     let errorVM: EmissionFactorEstimateViewModel = new EmissionFactorEstimateViewModel();
     errorVM.error = httpResponseError.error.error;

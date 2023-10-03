@@ -11,9 +11,7 @@ import * as categoryData from '../../models/json-data/categories.json';
 import * as unitTypeData from '../../models/json-data/unit-types.json';
 import { ClimatiqRequestService } from 'src/app/services/climatiq-request.service';
 import { SearchResponseViewModel } from 'src/app/models/viewModels/climatiq-search-models/search/searchResponseViewModel';
-import { SearchResponseResultsViewModel } from 'src/app/models/viewModels/climatiq-search-models/search/searchResponseResultsViewModel';
 import { UnitType } from 'src/app/models/viewModels/unit-type';
-
 
 @Component({
   selector: 'app-climatiq-estimate',
@@ -31,7 +29,6 @@ export class ClimatiqEstimateComponent implements OnInit {
   public searchResponseViewModel: SearchResponseViewModel =
     new SearchResponseViewModel();
   public savedSearches: SearchRequestViewModel[] = [];
-  public searchError: string = '';
   public regionDropdownData: Region[] = [];
   public sectorDropdownData: Sector[] = [];
 
@@ -52,9 +49,9 @@ export class ClimatiqEstimateComponent implements OnInit {
   public selectedYear: string;
 
   public unitTypes: UnitType[] = [];
-
   public isLoadedFromSavedSearch: boolean = false;
   public showSaveSearchButton: boolean = false;
+  public loading: boolean = false;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -92,10 +89,13 @@ export class ClimatiqEstimateComponent implements OnInit {
     const unitTypeDataString: string = JSON.stringify(unitTypeData);
     const unitTypeDropdownData = JSON.parse(unitTypeDataString) as UnitType[];
     Array.from(unitTypeDropdownData).forEach((element) => {
-      let unitType: UnitType = new UnitType(element.unit_type, element.additional_parameter_name, element.units);
+      let unitType: UnitType = new UnitType(
+        element.unit_type,
+        element.additional_parameter_name,
+        element.units
+      );
       this.unitTypes.push(unitType);
     });
-
   }
 
   loadRegionDropdown() {
@@ -228,17 +228,15 @@ export class ClimatiqEstimateComponent implements OnInit {
   }
 
   onSubmit(showSaveSearchButton: boolean = true) {
-    this.searchError = '';
+    this.loading = true;
     let searchRequestViewModel = this.getCurrentSearchRequest();
     this.climatiqRequestService
       .searchAvailableEmissionFactors(searchRequestViewModel)
       .subscribe((response: SearchResponseViewModel) => {
         this.searchResponseViewModel = response;
         this.showSaveSearchButton = showSaveSearchButton;
-      }),
-      (error: any) => {
-        this.searchError = error;
-      };
+        this.loading = false;
+      });
   }
 
   getCurrentSearchRequest() {
@@ -249,5 +247,4 @@ export class ClimatiqEstimateComponent implements OnInit {
       this.selectedCategory.name
     );
   }
-
 }
