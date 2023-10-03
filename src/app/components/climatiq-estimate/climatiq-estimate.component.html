@@ -132,14 +132,14 @@
 
   <div style="margin-top: 10px">
 
-    <ng-container *ngIf="searchResponseViewModel.error !== undefined">
+    <ng-container *ngIf="error !== undefined">
       <span class="error">
         <strong>Error: </strong>
-        {{ searchResponseViewModel.message }}
+        {{ error.message }}
       </span>
     </ng-container>
 
-    <ng-container *ngIf="searchResponseViewModel.error === undefined">
+    <ng-container *ngIf="error === undefined">
       <h4>Results</h4>
       <p *ngIf="searchResponseViewModel.results?.length === 0">
         No results to display

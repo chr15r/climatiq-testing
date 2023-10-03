@@ -28,7 +28,7 @@ export class ClimatiqRequestService {
 
   searchAvailableEmissionFactors(
     searchRequest: SearchRequestViewModel
-  ): Observable<SearchResponseViewModel> {
+  ): Observable<any> {
 
     const cachedData = localStorage.getItem(searchRequest.id);
 
@@ -48,28 +48,20 @@ export class ClimatiqRequestService {
           })
         )
         .pipe(
-          catchError(this.handleSearchError)
+          catchError(this.handleError)
         );;
     }
   }
-  handleSearchError(httpResponseError: HttpErrorResponse): Observable<SearchResponseViewModel> {
-    console.log(httpResponseError);
-    let errorVM: SearchResponseViewModel = new SearchResponseViewModel();
-    errorVM.error = httpResponseError.error.error;
-    errorVM.error_code = httpResponseError.error.status_code;
-    errorVM.message = httpResponseError.error.message;
-    return of(errorVM);
-  }
 
-  public getEmissionFactorEstimate(request: EmissionFactorEstimateRequestViewModel): Observable<EmissionFactorEstimateViewModel> {
+  public getEmissionFactorEstimate(request: EmissionFactorEstimateRequestViewModel): Observable<any> {
     return this.http.post<EmissionFactorEstimateViewModel>(`${this.estimateUrl}`, request)
     .pipe(
-      catchError(this.handleEstimateError)
+      catchError(this.handleError)
     );
   }
-  handleEstimateError(httpResponseError: HttpErrorResponse): Observable<EmissionFactorEstimateViewModel> {
+  handleError(httpResponseError: HttpErrorResponse): Observable<ErrorViewModel> {
     console.log(httpResponseError);
-    let errorVM: EmissionFactorEstimateViewModel = new EmissionFactorEstimateViewModel();
+    let errorVM: ErrorViewModel = new ErrorViewModel();
     errorVM.error = httpResponseError.error.error;
     errorVM.error_code = httpResponseError.error.status_code;
     errorVM.message = httpResponseError.error.message;
