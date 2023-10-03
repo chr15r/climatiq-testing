@@ -1,15 +1,12 @@
 import {
   HttpClient,
   HttpErrorResponse,
-  HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SearchRequestViewModel } from '../models/viewModels/climatiq-search-models/search/searchRequestViewModel';
-import { Observable, Subject, catchError, of, tap, throwError } from 'rxjs';
+import { Observable, catchError, of, tap } from 'rxjs';
 import { SearchRequestUtils } from '../utils/searchRequestUtils';
-import { SearchResponseViewModel } from '../models/viewModels/climatiq-search-models/search/searchResponseViewModel';
 import { Constants } from '../app.constants';
-import { EmissionFactorEstimateViewModel } from '../models/viewModels/climatiq-search-models/estimate/emissionFactorEstimateViewModel';
 import { EmissionFactorEstimateRequestViewModel } from '../models/viewModels/climatiq-search-models/estimate/emissionFactorEstimateRequestViewModel';
 import { ClimatiqAPIResponseViewModel } from '../models/viewModels/climatiq-search-models/climatiqAPIResponseViewModel';
 
