@@ -62,7 +62,6 @@ export class ClimatiqRequestService {
   handleError<T extends ClimatiqAPIResponseViewModel>(
     httpResponseError: HttpErrorResponse
   ): Observable<T> {
-    console.log(httpResponseError);
     let errorVM: T = new ClimatiqAPIResponseViewModel() as T;
     errorVM.error = httpResponseError.error.error;
     errorVM.error_code = httpResponseError.error.status_code;
