@@ -17,7 +17,7 @@
   {{ savedSearch.sector }} | <strong>Category</strong>
   {{ savedSearch.category }}
 </div>
-<div class="m-t-5" *ngIf="savedSearches.length > 0">
+<div class="m-t-5" *ngIf="!!savedSearches  && savedSearches.length > 0">
   <button type="button" class="btn btn-info" (click)="clearSavedSearches()">Clear All</button>
 </div>
 
