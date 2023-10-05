@@ -4,7 +4,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Climatiq API Key
 
-Before running this application, make sure you have a Climatiq API Key. Sign up for a Community plan here https://www.climatiq.io/pricing, generate an API key, go to app.constants.ts and populate CLIMATIQ_API_KEY with your new API key, and run the application. 
+Before running this application, make sure you have a Climatiq API Key.
+
+Sign up for a Community plan here https://www.climatiq.io/pricing, generate an API key, go to **app.constants.ts** and populate **CLIMATIQ_API_KEY** with your new API key, and run the application. 
 
 **Note** - With the Community edition you have a maximum of 250 API calls per month. To reduce your API calls, save your searches (see below) which will store them in the browser cache. Emission factor estimates will NOT be cached (yet!) 
 
