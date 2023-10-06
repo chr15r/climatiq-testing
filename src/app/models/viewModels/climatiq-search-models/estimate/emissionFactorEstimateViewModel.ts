@@ -1,6 +1,6 @@
 import { ClimatiqAPIResponseViewModel } from "../climatiqAPIResponseViewModel";
 import { ConstituentGasesViewModel } from "../constituentGasesViewModel";
-import { EmissionFactorViewModel } from "../emissionFactorViewModel";
+import { EmissionFactorViewModel } from "../search/emissionFactorViewModel";
 
 export class EmissionFactorEstimateViewModel extends ClimatiqAPIResponseViewModel {
   co2e: number;

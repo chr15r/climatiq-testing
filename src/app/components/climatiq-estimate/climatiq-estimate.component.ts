@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { SearchRequestViewModel } from 'src/app/models/viewModels/climatiq-search-models/search/searchRequestViewModel';
-import { Category } from 'src/app/models/viewModels/category';
-import { Region } from 'src/app/models/viewModels/region';
-import { Sector } from 'src/app/models/viewModels/sector';
+import { Category } from 'src/app/models/viewModels/filters/category';
+import { Region } from 'src/app/models/viewModels/filters/region';
+import { Sector } from 'src/app/models/viewModels/filters/sector';
 import * as regionData from '../../models/json-data/regions.json';
 import * as sectorData from '../../models/json-data/sectors.json';
 import * as categoryData from '../../models/json-data/categories.json';
