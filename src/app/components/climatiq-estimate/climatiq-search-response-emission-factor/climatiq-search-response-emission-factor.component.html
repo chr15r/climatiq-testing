@@ -20,7 +20,7 @@
   <div class="card-body">
     <h5>Estimate</h5>
 
-    <div class="row" *ngIf="additionalParameter !== undefined">
+    <div class="row" *ngIf="!!additionalParameter">
       <div class="col">
         <em
           ><strong
@@ -84,14 +84,14 @@
 
         <ng-container *ngIf="!loading && estimate">
 
-          <ng-container *ngIf="estimate.error !== undefined">
+          <ng-container *ngIf="!!estimate.error">
               <span class="error">
                 <strong>Error: </strong>
                 {{ estimate.error_message }}
               </span>
           </ng-container>
 
-          <ng-container *ngIf="estimate.error === undefined">
+          <ng-container *ngIf="!estimate.error">
             <h3>
               Co2 Estimate:
               <span class="estimate"

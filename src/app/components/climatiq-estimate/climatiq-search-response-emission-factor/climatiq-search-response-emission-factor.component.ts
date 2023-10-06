@@ -38,7 +38,7 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
     let unitType: UnitType = this.unitTypes.find(u => u.unit_type === this.emissionFactor.unit_type)!;
     this.availableUnits = unitType.units;
 
-    if(unitType.additional_parameter_name !== undefined) {
+    if(!!unitType.additional_parameter_name) {
       this.additionalParameter = new EmissionFactorEstimateAdditionalParameterViewModel(unitType.additional_parameter_name);
     }
 
@@ -48,8 +48,8 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
   }
 
   estimateDataValid() {
-    return this.unitValuesValid() && (this.additionalParameter === undefined  ||
-          (this.additionalParameter !== undefined && this.additionalParameter.value !== undefined));
+    return this.unitValuesValid() && (!this.additionalParameter  ||
+          (!!this.additionalParameter && !!this.additionalParameter.value));
   }
 
   unitValuesValid(): boolean {
@@ -96,7 +96,7 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
   buildParameterData(): { [key: string]: any } {
     let object: { [key: string]: any } = {};
 
-    if (this.additionalParameter !== undefined)
+    if (!!this.additionalParameter)
       object[this.additionalParameter.name] = this.additionalParameter.value;
 
     this.unitValues.forEach(u => {
