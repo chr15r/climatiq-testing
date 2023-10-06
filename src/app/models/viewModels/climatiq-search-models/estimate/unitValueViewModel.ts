@@ -1,4 +1,4 @@
-export class EmissionFactorEstimateUnitValueViewModel {
+export class UnitValueViewModel {
   name: string;
   value_parameter_name: string;
   dropdownUnits: string[] = [];

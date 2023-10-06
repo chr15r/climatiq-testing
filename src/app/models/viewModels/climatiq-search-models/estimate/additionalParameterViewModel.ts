@@ -1,4 +1,4 @@
-export class EmissionFactorEstimateAdditionalParameterViewModel {
+export class AdditionalParameterViewModel {
   name: string;
   value: number;
 

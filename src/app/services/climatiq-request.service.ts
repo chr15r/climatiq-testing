@@ -7,8 +7,8 @@ import { SearchRequestViewModel } from '../models/viewModels/climatiq-search-mod
 import { Observable, catchError, of, tap } from 'rxjs';
 import { SearchRequestUtils } from '../utils/searchRequestUtils';
 import { Constants } from '../app.constants';
-import { EmissionFactorEstimateRequestViewModel } from '../models/viewModels/climatiq-search-models/estimate/emissionFactorEstimateRequestViewModel';
 import { ClimatiqAPIResponseViewModel } from '../models/viewModels/climatiq-search-models/climatiqAPIResponseViewModel';
+import { EstimateRequestViewModel } from '../models/viewModels/climatiq-search-models/estimate/estimateRequestViewModel';
 
 @Injectable({
   providedIn: 'root',
@@ -53,7 +53,7 @@ export class ClimatiqRequestService {
   }
 
   public getEmissionFactorEstimate<T extends ClimatiqAPIResponseViewModel>(
-    request: EmissionFactorEstimateRequestViewModel
+    request: EstimateRequestViewModel
   ): Observable<T> {
     return this.http
       .post<T>(`${this.estimateUrl}`, request)

@@ -1,6 +1,6 @@
 import { SelectorViewModel } from "./selectorViewModel";
 
-export class EmissionFactorEstimateRequestViewModel {
+export class EstimateRequestViewModel {
   emission_factor : SelectorViewModel;
   parameters: object;
 }

@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Constants } from 'src/app/app.constants';
-import { EmissionFactorEstimateAdditionalParameterViewModel } from 'src/app/models/viewModels/climatiq-search-models/estimate/emissionFactorEstimateAdditionalParameterViewModel';
-import { EmissionFactorEstimateRequestViewModel } from 'src/app/models/viewModels/climatiq-search-models/estimate/emissionFactorEstimateRequestViewModel';
-import { EmissionFactorEstimateUnitValueViewModel } from 'src/app/models/viewModels/climatiq-search-models/estimate/emissionFactorEstimateUnitValueViewModel';
-import { EmissionFactorEstimateViewModel } from 'src/app/models/viewModels/climatiq-search-models/estimate/emissionFactorEstimateViewModel';
+import { AdditionalParameterViewModel } from 'src/app/models/viewModels/climatiq-search-models/estimate/additionalParameterViewModel';
+import { EstimateRequestViewModel } from 'src/app/models/viewModels/climatiq-search-models/estimate/estimateRequestViewModel';
+import { UnitValueViewModel } from 'src/app/models/viewModels/climatiq-search-models/estimate/unitValueViewModel';
+import { EstimateViewModel } from 'src/app/models/viewModels/climatiq-search-models/estimate/estimateViewModel';
 import { SelectorViewModel } from 'src/app/models/viewModels/climatiq-search-models/estimate/selectorViewModel';
 import { EmissionFactorViewModel } from 'src/app/models/viewModels/climatiq-search-models/search/emissionFactorViewModel';
 import { Unit } from 'src/app/models/viewModels/unit';
@@ -21,9 +21,9 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
   @Input() unitTypes: UnitType[];
 
   public availableUnits: Unit[] = [];
-  public additionalParameter: EmissionFactorEstimateAdditionalParameterViewModel;
-  public unitValues: EmissionFactorEstimateUnitValueViewModel[] = [];
-  public estimate: EmissionFactorEstimateViewModel;
+  public additionalParameter: AdditionalParameterViewModel;
+  public unitValues: UnitValueViewModel[] = [];
+  public estimate: EstimateViewModel;
   public loading: boolean = false;
 
   constructor(private readonly climatiqRequestService: ClimatiqRequestService) {
@@ -39,11 +39,11 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
     this.availableUnits = unitType.units;
 
     if(!!unitType.additional_parameter_name) {
-      this.additionalParameter = new EmissionFactorEstimateAdditionalParameterViewModel(unitType.additional_parameter_name);
+      this.additionalParameter = new AdditionalParameterViewModel(unitType.additional_parameter_name);
     }
 
     this.availableUnits.forEach(u => {
-      this.unitValues.push(new EmissionFactorEstimateUnitValueViewModel(u.name, u.value_parameter_name, u.values));
+      this.unitValues.push(new UnitValueViewModel(u.name, u.value_parameter_name, u.values));
     });
   }
 
@@ -61,7 +61,7 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
     return invalidUnits > 0 ? false : true;
   }
 
-  unitValueIsValid(u: EmissionFactorEstimateUnitValueViewModel): boolean {
+  unitValueIsValid(u: UnitValueViewModel): boolean {
     return u.selectedUnit?.length > 0 && u.inputValue?.toString().length > 0;
   }
 
@@ -71,11 +71,11 @@ export class ClimatiqSearchResponseEmissionFactorComponent implements OnInit {
 
   estimateEmissionFactor() {
     this.loading = true;
-    let estimate: EmissionFactorEstimateRequestViewModel = new EmissionFactorEstimateRequestViewModel();
+    let estimate: EstimateRequestViewModel = new EstimateRequestViewModel();
     estimate.emission_factor = this.buildSelectorData();
     estimate.parameters = this.buildParameterData();
 
-    this.climatiqRequestService.getEmissionFactorEstimate<EmissionFactorEstimateViewModel>(estimate).subscribe((response) => {
+    this.climatiqRequestService.getEmissionFactorEstimate<EstimateViewModel>(estimate).subscribe((response) => {
       this.estimate = response;
       this.loading = false;
     })
