@@ -136,14 +136,14 @@
 
   <div style="margin-top: 10px">
 
-    <ng-container *ngIf="searchResponse.error !== undefined">
+    <ng-container *ngIf="!!searchResponse.error">
       <span class="error">
         <strong>Error: </strong>
         {{ searchResponse.error_message }}
       </span>
     </ng-container>
 
-    <ng-container *ngIf="searchResponse.error === undefined">
+    <ng-container *ngIf="!searchResponse.error">
       <h4>Results</h4>
       <p *ngIf="searchResponse.results?.length === 0">
         No results to display
@@ -152,7 +152,7 @@
       <div
         class="search-response accordion"
         *ngFor="let result of searchResponse.results"  >
-        <app-climatiq-search-response-emission-factor [searchResponseResult]="result" [unitTypes]="unitTypes"></app-climatiq-search-response-emission-factor>
+        <app-climatiq-search-response-emission-factor [emissionFactor]="result" [unitTypes]="unitTypes"></app-climatiq-search-response-emission-factor>
       </div>
 
 

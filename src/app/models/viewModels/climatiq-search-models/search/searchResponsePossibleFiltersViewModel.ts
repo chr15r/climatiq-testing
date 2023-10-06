@@ -1,10 +1,7 @@
-import { SearchResponseRegionViewModel } from "./searchResponseRegionViewModel";
-import { SearchResponseSourceViewModel } from "./searchResponseSourceViewModel";
-
 export class SearchResponsePossibleFiltersViewModel {
   year: number[];
-  source: SearchResponseSourceViewModel[];
-  region : SearchResponseRegionViewModel[];
+  source: { source: string, datasets: string[] }[];
+  region : { id: string, name: string[] }[];
   category: string[];
   sector: string;
   unit_type: string[];

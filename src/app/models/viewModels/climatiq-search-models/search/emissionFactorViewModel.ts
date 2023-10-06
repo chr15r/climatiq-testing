@@ -1,7 +1,6 @@
 import { ConstituentGasesViewModel } from "../constituentGasesViewModel";
 
-
-export class SearchResponseResultsViewModel {
+export class EmissionFactorViewModel {
   id: string;
   activity_id: string;
   access_type: string;
@@ -24,4 +23,8 @@ export class SearchResponseResultsViewModel {
   factor_calculation_method: string;
   factor_calculation_origin: string;
   constituent_gases: ConstituentGasesViewModel[];
+  audit_trail: string;
+  activity_data: any;
+
+
 }
