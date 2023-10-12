@@ -1,10 +1,22 @@
 <html>
   <header>
-    <img src="https://app.climatiq.io/_next/image?url=%2Flogo.png&w=256&q=75" />
+    <div class="d-flex flex-row" style="align-items: center;">
+      <div class="p-2">
+        <img
+          src="https://app.climatiq.io/_next/image?url=%2Flogo.png&w=256&q=75"
+        />
+      </div>
+      <div class="p-2">
+        <app-climatiq-api-key
+          (onApiKeyChange)="onApiKeyChange($event)"
+        ></app-climatiq-api-key>
+      </div>
+    </div>
   </header>
   <body>
     <div class="main">
-      <app-climatiq-estimate></app-climatiq-estimate>
+
+      <app-climatiq-estimate *ngIf="apiKey !== null"></app-climatiq-estimate>
     </div>
   </body>
 </html>
