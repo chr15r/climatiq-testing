@@ -5,8 +5,16 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
 
-span.error {
+.error {
   color: red;
+}
+
+.green {
+  color: rgb(63, 217, 63);
+}
+
+.grey {
+  color: grey;
 }
 
 .m-t-5 {
