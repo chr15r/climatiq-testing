@@ -32,7 +32,7 @@ export class ClimatiqApiKeyComponent implements OnInit {
     this.onApiKeyChange.next('');
   }
 
-  displayApiKeyMessage(): boolean {
+  get editMode(): boolean {
     return Constants.CLIMATIQ_API_KEY === null;
   }
 }

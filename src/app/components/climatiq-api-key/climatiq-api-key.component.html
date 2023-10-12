@@ -1,11 +1,11 @@
 <form (ngSubmit)="onSubmit()" class="form-inline">
-  <span style="color: red;" *ngIf="displayApiKeyMessage()">Please enter an API Key before proceeding</span>
+  <span class="alert" *ngIf="editMode">Please enter an API Key before proceeding</span>
   <div class="input-group" style="align-items: center;">
-    <label>Enter API Key:</label>&nbsp;
-    <input type="password" class="form-control" id="apiKeyInput" value="test" [formControl]="apiKeyInput" placeholder="Enter API Key">
+    <label class="{{ !editMode ? 'green' : 'black' }}">{{ !editMode ? 'API Key Entered' : 'Enter API Key:'  }}  </label>&nbsp;
+    <input *ngIf="editMode" type="password" class="form-control" id="apiKeyInput" value="test" [formControl]="apiKeyInput" placeholder="Enter API Key">
     <div class="input-group-append" style="margin-left: 10px;">
-      <button type="submit" [disabled]="!apiKeyInput.valid" class="btn btn-primary mb-2">Enter</button>&nbsp;
-      <button type="submit" class="btn btn-danger mb-2" (click)="onRemoveApiKey()">Remove</button>
+      <button *ngIf="editMode" type="submit" class="btn {{ editMode ? 'btn-primary' : 'btn-secondary faded' }}" [disabled]="!apiKeyInput.valid && !editMode" >Enter</button>&nbsp;
+      <button *ngIf="!editMode" type="submit" class="btn btn-info" (click)="onRemoveApiKey()">Change</button>
     </div>
   </div>
 </form>
