@@ -20,7 +20,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
     ng g class app.secrets
    ```
 
-6. In the generated file, add the CLIMATIQ_API_KEY string property:
+6. In the generated file, add the `CLIMATIQ_API_KEY` string property:
     ```
     export class AppSecrets {
       public static CLIMATIQ_API_KEY: string  = '';
