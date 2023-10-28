@@ -43,3 +43,5 @@ Thumbs.db
 
 # Custom
 /src/app/app.secrets.ts
+/src/app/app.secrets.spec.ts
+
