@@ -6,17 +6,14 @@
           src="https://app.climatiq.io/_next/image?url=%2Flogo.png&w=256&q=75"
         />
       </div>
-      <div class="p-2">
-        <app-climatiq-api-key
-          (onApiKeyChange)="onApiKeyChange($event)"
-        ></app-climatiq-api-key>
-      </div>
     </div>
   </header>
   <body>
     <div class="main">
 
-      <app-climatiq-estimate *ngIf="apiKey !== null"></app-climatiq-estimate>
+      <p *ngIf="apiKey.length === 0" class="error">API Key Required (See README)</p>
+
+      <app-climatiq-estimate *ngIf="apiKey.length > 0"></app-climatiq-estimate>
     </div>
   </body>
 </html>
