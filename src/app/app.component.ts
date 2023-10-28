@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Constants } from './app.constants';
+import { AppSecrets } from './app.secrets';
 
 @Component({
   selector: 'app-root',
@@ -8,30 +9,14 @@ import { Constants } from './app.constants';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private readonly changeDetector: ChangeDetectorRef,) {
-
+  constructor(private readonly changeDetector: ChangeDetectorRef) {
   }
 
-  public apiKey: string | null  = '';
+  public apiKey: string  = '';
 
   ngOnInit(): void {
-    this.loadClimatiqAPIKey();
+    this.apiKey = AppSecrets.CLIMATIQ_API_KEY;
   }
 
-  loadClimatiqAPIKey() {
-    Constants.CLIMATIQ_API_KEY = localStorage.getItem(Constants.CLIMATIQ_API_LOCALSTORAGE_KEY);
-    this.apiKey = Constants.CLIMATIQ_API_KEY;
-  }
-
-  onApiKeyChange(apiKey: string) {
-    if (apiKey === '') {
-      localStorage.removeItem(Constants.CLIMATIQ_API_LOCALSTORAGE_KEY);
-    }
-    else {
-      localStorage.setItem(Constants.CLIMATIQ_API_LOCALSTORAGE_KEY, apiKey);
-    }
-    this.loadClimatiqAPIKey();
-    this.changeDetector.detectChanges();
-  }
 
 }

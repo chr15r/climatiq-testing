@@ -11,15 +11,13 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
 import { ClimatiqRequestService } from './services/climatiq-request.service';
 import { ClimatiqSearchResponseEmissionFactorComponent } from './components/climatiq-estimate/climatiq-search-response-emission-factor/climatiq-search-response-emission-factor.component';
 import { LoaderComponent } from './components/shared/loader/loader.component';
-import { ClimatiqApiKeyComponent } from './components/climatiq-api-key/climatiq-api-key.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ClimatiqEstimateComponent,
     ClimatiqSearchResponseEmissionFactorComponent,
-    LoaderComponent,
-    ClimatiqApiKeyComponent
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
